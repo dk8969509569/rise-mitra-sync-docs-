@@ -1,1 +1,28 @@
+# Node & Dependencies
+node_modules/
+dist/
+build/
+npm-debug.log*
 
+# Environment & Secrets (Zero-Trust Invariant)
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# Database & Cache runtime
+*.sqlite
+*.sqlite-journal
+prisma/migrations/*_down.sql
+
+# OS & Logs
+.DS_Store
+Thumbs.db
+logs/
+*.log
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
