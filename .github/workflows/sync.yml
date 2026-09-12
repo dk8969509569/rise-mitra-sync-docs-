@@ -17,65 +17,25 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Google API Libraries
-        run: |
-          pip install --upgrade google-api-python-client google-auth
+      - name: Install Dependencies
+        run: pip install requests
 
-      - name: Upload Files to Google Drive
+      - name: Upload Files via Apps Script Gateway
         env:
-          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
-          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          WEBAPP_URL: ${{ secrets.GDRIVE_WEBAPP_URL }}
+          FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
           python - << 'EOF'
           import os
-          import json
-          from google.oauth2 import service_account
-          from googleapiclient.discovery import build
-          from googleapiclient.http import MediaFileUpload
-          from googleapiclient.errors import HttpError
+          import requests
 
-          sa_key_str = os.environ.get('GDRIVE_SA_KEY', '').strip()
-          folder_id = os.environ.get('GDRIVE_FOLDER_ID', '').strip()
+          webapp_url = os.environ.get('WEBAPP_URL', '').strip()
+          folder_id = os.environ.get('FOLDER_ID', '').strip()
 
-          if not sa_key_str or not folder_id:
-              raise ValueError("Secrets GDRIVE_SA_KEY or GDRIVE_FOLDER_ID missing!")
+          if not webapp_url or not folder_id:
+              raise ValueError("Missing GDRIVE_WEBAPP_URL or GDRIVE_FOLDER_ID")
 
-          creds_dict = json.loads(sa_key_str)
-          client_email = creds_dict.get('client_email', '')
-
-          print("==================================================")
-          print("SERVICE ACCOUNT DIAGNOSTICS:")
-          print("Target Folder ID:", folder_id)
-          print("Client Email (Plain):", client_email)
-          print("Client Email (Spaced):", " ".join(list(client_email)))
-          print("==================================================")
-
-          scopes = ['https://www.googleapis.com/auth/drive']
-          credentials = service_account.Credentials.from_service_account_info(creds_dict, scopes=scopes)
-          drive_service = build('drive', 'v3', credentials=credentials)
-
-          try:
-              folder_meta = drive_service.files().get(
-                  fileId=folder_id,
-                  fields="id, name",
-                  supportsAllDrives=True
-              ).execute()
-              print(f"SUCCESS: Connected to Drive Folder: '{folder_meta.get('name')}'")
-          except HttpError as err:
-              print("\n" + "!" * 50)
-              print("ACCESS ERROR: Google Drive folder access denied or not found!")
-              print(f"Make sure this EXACT email is added as 'Editor' in Google Drive:")
-              print("-->", client_email)
-              print("!" * 50 + "\n")
-              raise err
-
-          results = drive_service.files().list(
-              q=f"'{folder_id}' in parents and trashed=false",
-              fields="files(id, name)",
-              supportsAllDrives=True,
-              includeItemsFromAllDrives=True
-          ).execute()
-          existing_files = {f['name']: f['id'] for f in results.get('files', [])}
+          print("Connected to Google Apps Script Gateway...")
 
           count = 0
           for root, dirs, files in os.walk('.'):
@@ -84,25 +44,26 @@ jobs:
               for file in files:
                   file_path = os.path.join(root, file)
                   file_name = os.path.relpath(file_path, '.').replace(os.path.sep, '_')
-                  media = MediaFileUpload(file_path, resumable=True)
 
-                  if file_name in existing_files:
-                      print(f"Updating: {file_name}")
-                      drive_service.files().update(
-                          fileId=existing_files[file_name],
-                          media_body=media,
-                          supportsAllDrives=True
-                      ).execute()
+                  try:
+                      with open(file_path, 'r', encoding='utf-8') as f:
+                          content = f.read()
+                  except Exception:
+                      continue
+
+                  payload = {
+                      "secret": "RISE_MITRA_SYNC_2026",
+                      "folderId": folder_id,
+                      "fileName": file_name,
+                      "content": content
+                  }
+
+                  res = requests.post(webapp_url, json=payload, allow_redirects=True)
+                  if res.status_code == 200 and res.json().get('status') == 'success':
+                      print(f"Synced: {file_name}")
+                      count += 1
                   else:
-                      print(f"Uploading: {file_name}")
-                      metadata = {'name': file_name, 'parents': [folder_id]}
-                      drive_service.files().create(
-                          body=metadata,
-                          media_body=media,
-                          fields='id',
-                          supportsAllDrives=True
-                      ).execute()
-                  count += 1
+                      print(f"Failed {file_name}: {res.text}")
 
-          print(f"\nCOMPLETED: {count} files synchronized successfully to Google Drive!")
+          print(f"\nALL DONE: {count} files synchronized to Google Drive successfully!")
           EOF
