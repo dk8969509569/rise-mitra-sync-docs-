@@ -1,0 +1,80 @@
+name: Sync Repository to Google Drive
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  sync-to-drive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Google API Libraries
+        run: |
+          pip install --upgrade google-api-python-client google-auth
+
+      - name: Upload Files to Google Drive
+        env:
+          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+        run: |
+          python - << 'EOF'
+          import os
+          import json
+          from google.oauth2 import service_account
+          from googleapiclient.discovery import build
+          from googleapiclient.http import MediaFileUpload
+
+          sa_key_str = os.environ.get('GDRIVE_SA_KEY')
+          folder_id = os.environ.get('GDRIVE_FOLDER_ID')
+
+          if not sa_key_str or not folder_id:
+              raise ValueError("Secrets GDRIVE_SA_KEY or GDRIVE_FOLDER_ID missing!")
+
+          creds_dict = json.loads(sa_key_str)
+          scopes = ['https://www.googleapis.com/auth/drive']
+          credentials = service_account.Credentials.from_service_account_info(creds_dict, scopes=scopes)
+          drive_service = build('drive', 'v3', credentials=credentials)
+
+          print(f"Target Google Drive Folder ID: {folder_id}")
+
+          # Fetch existing files in folder
+          results = drive_service.files().list(
+              q=f"'{folder_id}' in parents and trashed=false",
+              fields="files(id, name)"
+          ).execute()
+          existing_files = {f['name']: f['id'] for f in results.get('files', [])}
+
+          for root, dirs, files in os.walk('.'):
+              if '.git' in root or '.github' in root:
+                  continue
+              for file in files:
+                  file_path = os.path.join(root, file)
+                  file_name = os.path.relpath(file_path, '.').replace(os.path.sep, '_')
+                  media = MediaFileUpload(file_path, resumable=True)
+
+                  if file_name in existing_files:
+                      print(f"Updating: {file_name}")
+                      drive_service.files().update(
+                          fileId=existing_files[file_name],
+                          media_body=media
+                      ).execute()
+                  else:
+                      print(f"Uploading: {file_name}")
+                      metadata = {'name': file_name, 'parents': [folder_id]}
+                      drive_service.files().create(
+                          body=metadata,
+                          media_body=media,
+                          fields='id'
+                      ).execute()
+
+          print("Drive Sync Finished Successfully!")
+          EOF
