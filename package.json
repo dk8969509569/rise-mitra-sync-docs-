@@ -1,0 +1,46 @@
+{
+  "name": "rise-mitra-bot",
+  "version": "1.0.0",
+  "description": "Rise Mitra Multi-Domain Autonomous Telegram Bot & Trading Super-App",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "auto:tier1": "prisma generate && tsc --noEmit",
+    "auto:tier2": "tsc --noEmit",
+    "auto:tier3": "tsc --noEmit",
+    "auto:tier4": "tsc --noEmit && npm run build",
+    "auto:pipeline": "prisma generate && prisma db push && tsc && node dist/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.525.0",
+    "@fastify/static": "^6.12.0",
+    "@grammyjs/conversations": "^1.1.2",
+    "@grammyjs/hydrate": "^1.4.1",
+    "@grammyjs/runner": "^2.0.3",
+    "@prisma/client": "^5.10.2",
+    "bullmq": "^5.4.1",
+    "ccxt": "^4.2.55",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.1",
+    "grammy": "^1.21.1",
+    "ioredis": "^5.3.2",
+    "pino": "^8.19.0",
+    "pino-pretty": "^10.3.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "prisma": "^5.10.2",
+    "tsx": "^4.19.1",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
