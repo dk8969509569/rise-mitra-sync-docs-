@@ -1,0 +1,309 @@
+// @canonical-root File-11: 11_01_MAIN_BASE_SCHEMA
+// @child-ext      NONE
+// @tier           Tier-1
+// @domain         Domain-00 to Domain-07
+// @zero-loss-rule Invariant validated against master specification
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// DOMAIN-00: MASTER GOVERNANCE & SAFETY
+// ==========================================
+
+model D00_SystemConfig {
+  id                  String   @id @default(uuid()) @db.Uuid
+  key                 String   @unique
+  value               String
+  is_encrypted        Boolean  @default(false)
+  updated_by          String   @default("SYSTEM")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model D00_OwnerAuditLog {
+  id                  String   @id @default(uuid()) @db.Uuid
+  action              String
+  actor_id            String
+  target_domain       String
+  payload_hash        String
+  details             String?
+  timestamp           DateTime @default(now())
+}
+
+model D00_AiGovernanceDirective {
+  id                  String   @id @default(uuid()) @db.Uuid
+  directive_code      String   @unique
+  category            String
+  rule_content        String
+  is_active           Boolean  @default(true)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+// ==========================================
+// DOMAIN-01: TRADING & BROKER INTEGRATION
+// ==========================================
+
+model D01_TradingSignal {
+  id                  String   @id @default(uuid()) @db.Uuid
+  ticker              String
+  action              String
+  entry_price         Decimal  @db.Decimal(18, 8)
+  stop_loss           Decimal  @db.Decimal(18, 8)
+  target_1            Decimal  @db.Decimal(18, 8)
+  target_2            Decimal? @db.Decimal(18, 8)
+  timeframe           String
+  idempotency_key     String   @unique
+  status              String   @default("PENDING")
+  created_at          DateTime @default(now())
+}
+
+model D01_TradeOrder {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  broker_name         String
+  symbol              String
+  side                String
+  quantity            Decimal  @db.Decimal(18, 8)
+  price               Decimal  @db.Decimal(18, 8)
+  status              String   @default("SUBMITTED")
+  broker_order_id     String?  @unique
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model D01_BrokerAccount {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String   @unique
+  broker_type         String
+  client_id           String
+  encrypted_token     String
+  is_active           Boolean  @default(true)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model D01_Position {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  symbol              String
+  broker_name         String
+  quantity            Decimal  @db.Decimal(18, 8)
+  avg_entry_price     Decimal  @db.Decimal(18, 8)
+  current_price       Decimal  @db.Decimal(18, 8)
+  unrealized_pnl      Decimal  @db.Decimal(18, 8)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+// ==========================================
+// DOMAIN-02: LEGAL & COMPLIANCE
+// ==========================================
+
+model D02_UserConsent {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String   @unique
+  consent_version     String
+  has_accepted_terms  Boolean  @default(false)
+  has_accepted_risk   Boolean  @default(false)
+  ip_address          String?
+  timestamp           DateTime @default(now())
+}
+
+model D02_DisclaimerAudit {
+  id                  String   @id @default(uuid()) @db.Uuid
+  message_id          String
+  chat_id             String
+  disclaimer_hash     String
+  timestamp           DateTime @default(now())
+}
+
+// ==========================================
+// DOMAIN-03: BILLING & PAYMENT GATEWAYS
+// ==========================================
+
+model D03_SubscriptionPlan {
+  id                  String   @id @default(uuid()) @db.Uuid
+  plan_code           String   @unique
+  name                String
+  price_fiat          Decimal  @db.Decimal(12, 2)
+  validity_days       Int
+  is_active           Boolean  @default(true)
+  created_at          DateTime @default(now())
+}
+
+model D03_UserSubscription {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  plan_id             String   @db.Uuid
+  start_date          DateTime @default(now())
+  expiry_date         DateTime
+  is_active           Boolean  @default(true)
+}
+
+model D03_PaymentInvoice {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  amount              Decimal  @db.Decimal(12, 2)
+  currency            String   @default("INR")
+  gateway             String
+  transaction_id      String   @unique
+  status              String   @default("INITIATED")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+// ==========================================
+// DOMAIN-04: TELEGRAM UX & SESSIONS
+// ==========================================
+
+model D04_TelegramUser {
+  id                  String   @id @default(uuid()) @db.Uuid
+  telegram_id         BigInt   @unique
+  username            String?
+  first_name          String?
+  is_registered       Boolean  @default(false)
+  current_role        String   @default("MEMBER")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model D04_UserSessionFsm {
+  id                  String   @id @default(uuid()) @db.Uuid
+  telegram_id         BigInt   @unique
+  current_scene       String   @default("IDLE")
+  session_data        Json     @default("{}")
+  updated_at          DateTime @updatedAt
+}
+
+model D04_SupportTicket {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  subject             String
+  status              String   @default("OPEN")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+// ==========================================
+// DOMAIN-05: CREATOR STUDIO & BROADCAST
+// ==========================================
+
+model D05_CreatorContent {
+  id                  String   @id @default(uuid()) @db.Uuid
+  author_id           String
+  content_type        String
+  payload_url         String
+  status              String   @default("DRAFT")
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model D05_BroadcastQueue {
+  id                  String   @id @default(uuid()) @db.Uuid
+  content_id          String   @db.Uuid
+  target_audience     String
+  delivery_status     String   @default("QUEUED")
+  scheduled_at        DateTime
+  created_at          DateTime @default(now())
+}
+
+// ==========================================
+// DOMAIN-06: RETENTION & RECURRING LOYALTY
+// ==========================================
+
+model D06_UserStreak {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String   @unique
+  current_streak      Int      @default(1)
+  longest_streak      Int      @default(1)
+  last_activity_date  DateTime @default(now())
+}
+
+model D06_RetentionMetric {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  engagement_score    Decimal  @default(0.00) @db.Decimal(5, 2)
+  recorded_at         DateTime @default(now())
+}
+
+model D06_ScheduledTask {
+  id                  String   @id @default(uuid()) @db.Uuid
+  task_name           String
+  cron_expression     String
+  is_running          Boolean  @default(false)
+  last_run_at         DateTime?
+}
+
+// ==========================================
+// DOMAIN-07: AFFILIATE NETWORK & PAYOUTS
+// ==========================================
+
+model D07_AffiliateProfile {
+  id                     String                 @id @default(uuid()) @db.Uuid
+  user_id                String                 @unique
+  sponsor_id             String?                @db.Uuid
+  sponsor                D07_AffiliateProfile?  @relation("AffiliateHierarchy", fields: [sponsor_id], references: [id], onDelete: SetNull)
+  downlines              D07_AffiliateProfile[] @relation("AffiliateHierarchy")
+  tree_path              String                 @default("/")
+  tree_depth             Int                    @default(0)
+  direct_referrals_count Int                    @default(0)
+  total_downline_count   Int                    @default(0)
+  total_team_volume      Decimal                @default(0.00) @db.Decimal(12, 2)
+  created_at             DateTime               @default(now())
+  updated_at             DateTime               @updatedAt
+}
+
+model D07_AffiliateLedger {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  amount              Decimal  @db.Decimal(12, 2)
+  entry_type          String   // CREDIT | DEBIT
+  source_event        String
+  idempotency_key     String   @unique
+  created_at          DateTime @default(now())
+}
+
+model D07_LockinSchedule {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  amount              Decimal  @db.Decimal(12, 2)
+  locked_at           DateTime @default(now())
+  unlock_at           DateTime
+  status              String   @default("LOCKED")
+}
+
+model D07_DiversificationReward {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  multiplier          Decimal  @default(1.00) @db.Decimal(4, 2)
+  reward_points       Int      @default(0)
+  awarded_at          DateTime @default(now())
+}
+
+model D07_PayoutRequest {
+  id                  String   @id @default(uuid()) @db.Uuid
+  user_id             String
+  amount              Decimal  @db.Decimal(12, 2)
+  payout_mode         String   // UPI | USDT
+  destination_address String
+  status              String   @default("REQUESTED")
+  requested_at        DateTime @default(now())
+  processed_at        DateTime?
+}
+
+model D07_PayoutAuditTrail {
+  id                  String   @id @default(uuid()) @db.Uuid
+  payout_request_id   String   @db.Uuid
+  reviewer_id         String
+  status_change       String
+  notes               String?
+  timestamp           DateTime @default(now())
+}
