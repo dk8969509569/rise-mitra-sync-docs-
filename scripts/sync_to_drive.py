@@ -5,8 +5,9 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-FOLDER_ID = os.environ.get('GDRIVE_FOLDER_ID')
-SA_KEY_RAW = os.environ.get('GDRIVE_SA_KEY')
+FOLDER_ID = (os.environ.get('GDRIVE_FOLDER_ID') or '').strip()
+SA_KEY_RAW = (os.environ.get('GDRIVE_SA_KEY') or '').strip()
+
 
 def get_drive_service():
     if not SA_KEY_RAW:
