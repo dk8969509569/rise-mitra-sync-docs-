@@ -1,9 +1,10 @@
 /**
  * @canonical-root File-13: 13_03_MAIN_FEATURE_BOT_INTERFACE
+ * @child-ext      File-12: 12_02_SUB_BASE_CLOUD_STORAGE
  * @child-ext      01_00__EXT_004_UNIFIED_ZEL_CORRECTION_ROADMAP
  * @tier           Tier-2 Ingress Surface
  * @domain         Domain-03 Bot UI & User Journeys
- * @zero-loss-rule Decoupled External Connector & 9-Card Idempotent Navigation
+ * @zero-loss-rule Persistent Redis Session Adapter & 9-Card Navigation
  */
 
 import { Bot, Context, session, SessionFlavor } from "grammy";
@@ -18,6 +19,7 @@ import {
   handleMenuCommand,
   handleMenuCallback,
 } from "./handlers/menu.handler";
+import { RedisSessionStore } from "../cache/session.store";
 
 export interface BotSessionData {
   userId: string;
@@ -32,13 +34,17 @@ export const createBotInstance = (token?: string): Bot<BotContext> => {
   const botToken = token || process.env["TELEGRAM_BOT_TOKEN"] || "DUMMY_TOKEN_FOR_SCAFFOLDING";
   const bot = new Bot<BotContext>(botToken);
 
-  // 1. Session Middleware (In-memory baseline for scaffolding)
+  // 1. Session Middleware (Backed by RedisSessionStore for persistent FSM state)
   bot.use(
     session({
       initial: (): BotSessionData => ({
         userId: "USR-ANONYMOUS",
         step: "IDLE",
         currentDomain: "D03_BOT_UI",
+      }),
+      storage: new RedisSessionStore<BotSessionData>({
+        ttlSeconds: 86400, // 24-hour persistence
+        keyPrefix: "rm:session:bot:",
       }),
     })
   );
