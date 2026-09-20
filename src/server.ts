@@ -1,23 +1,27 @@
 /**
  * @canonical-root File-16: 16_06_SUB_ENGINES_SERVICES
- * @child-ext      NONE
+ * @child-ext      01_00__EXT_004_UNIFIED_ZEL_CORRECTION_ROADMAP
  * @tier           Tier-1 & Tier-2 Interface
- * @domain         Domain-00 & Domain-01
- * @zero-loss-rule Non-blocking Ingress & Sovereign Health Telemetry
+ * @domain         Domain-00, Domain-01 & Domain-03
+ * @zero-loss-rule Non-blocking Ingress, Decoupled Webhook & Sovereign Telemetry
  */
 
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { webhookCallback } from "grammy";
 import {
   CanonicalErrorFactory,
   CanonicalIdGenerator,
   RFC8785Serializer,
   ServiceResult,
 } from "./core/contracts";
+import { createBotInstance } from "./bot/bot";
 
 export interface FastifyServerConfig {
   port: number;
   host: string;
   systemMode: string;
+  botToken?: string;
+  webhookSecret?: string;
 }
 
 export const createFastifyServer = (config?: Partial<FastifyServerConfig>): FastifyInstance => {
@@ -62,14 +66,38 @@ export const createFastifyServer = (config?: Partial<FastifyServerConfig>): Fast
     const traceId = (request.id as string) || CanonicalIdGenerator.generateTraceId();
     const info = {
       name: "Rise Mitra Multi-Domain Core Kernel",
-      tier: "Tier-1 Foundation Ready",
+      tier: "Tier-1 & Tier-2 Interface Active",
       compliance: "DPDP 2025 • Direct Selling 2021 • 28% NCR Ceiling",
       documentation: "Folder A Canonical Baseline v0.20.0",
     };
     return reply.status(200).send(CanonicalErrorFactory.success(info, traceId));
   });
 
-  // 3. GLOBAL ERROR HANDLER (Deny-by-Default & No Secret Leaks)
+  // 3. TELEGRAM INBOUND WEBHOOK (Domain-03 Decoupled Connector)
+  const botInstance = createBotInstance(config?.botToken);
+  const botWebhookHandler = webhookCallback(botInstance, "fastify");
+
+  server.post("/webhook/telegram", async (request: FastifyRequest, reply: FastifyReply) => {
+    const traceId = (request.id as string) || CanonicalIdGenerator.generateTraceId();
+    const secretHeader = request.headers["x-telegram-bot-api-secret-token"];
+    const expectedSecret = config?.webhookSecret || process.env["WEBHOOK_SECRET"];
+
+    if (expectedSecret && secretHeader !== expectedSecret) {
+      server.log.warn({ traceId }, "Unauthorized Telegram webhook signature rejected");
+      return reply.status(401).send(
+        CanonicalErrorFactory.create(
+          "D01_INFRASTRUCTURE",
+          "UNAUTHORIZED_WEBHOOK_SOURCE",
+          "Invalid Telegram webhook authentication secret.",
+          traceId
+        )
+      );
+    }
+
+    return botWebhookHandler(request, reply);
+  });
+
+  // 4. GLOBAL ERROR HANDLER (Deny-by-Default & No Secret Leaks)
   server.setErrorHandler((error, request: FastifyRequest, reply: FastifyReply) => {
     const traceId = (request.id as string) || CanonicalIdGenerator.generateTraceId();
     server.log.error({ err: error, traceId }, "Internal request failure encountered");
@@ -89,7 +117,7 @@ export const createFastifyServer = (config?: Partial<FastifyServerConfig>): Fast
   return server;
 };
 
-// 4. BOOTSTRAP STANDALONE LIFECYCLE
+// 5. BOOTSTRAP STANDALONE LIFECYCLE
 export const startServer = async (): Promise<FastifyInstance> => {
   const port = Number(process.env["PORT"]) || 3000;
   const host = "0.0.0.0";
