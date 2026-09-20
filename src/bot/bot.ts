@@ -13,6 +13,11 @@ import {
   RFC8785Serializer,
   ServiceResult,
 } from "../core/contracts";
+import {
+  createNineCardMenuKeyboard,
+  handleMenuCommand,
+  handleMenuCallback,
+} from "./handlers/menu.handler";
 
 export interface BotSessionData {
   userId: string;
@@ -62,36 +67,29 @@ export const createBotInstance = (token?: string): Bot<BotContext> => {
       "स्वास्थ्य और स्वावलंबन का संप्रभु मंच:\n" +
       "• *हेल्थ पिलर*: सुरक्षित मन, स्वस्थ शरीर, सुरक्षित डेटा\n" +
       "• *वेल्थ पिलर*: सुरक्षित पूँजी, निखरा हुनर, सतत आत्मनिर्भरता\n\n" +
-      "कृपया नीचे दिए गए मेनू से सेवा चुनें:";
-
-    const keyboard = {
-      inline_keyboard: [
-        [
-          { text: "📚 हुनर व शिक्षा (Courses)", callback_data: "NAV_TRACK_01" },
-          { text: "💼 सेवा व गिग (Services)", callback_data: "NAV_TRACK_05" },
-        ],
-        [
-          { text: "🏪 लोकल कॉमर्स (Shop)", callback_data: "NAV_COMMERCE" },
-          { text: "🛡️ विधिक व प्राइवेसी (Legal)", callback_data: "NAV_LEGAL" },
-        ],
-        [
-          { text: "📊 पार्टनर डैशबोर्ड (Ledger)", callback_data: "NAV_PARTNER" },
-          { text: "⚙️ सिस्टम हेल्थ (Status)", callback_data: "NAV_HEALTH" },
-        ],
-      ],
-    };
+      "मुख्य नेविगेशन लोड करने के लिए नीचे दिए गए मेनू से सेवा चुनें या `/menu` टाइप करें:";
 
     await ctx.reply(welcomeText, {
       parse_mode: "Markdown",
-      reply_markup: keyboard,
+      reply_markup: createNineCardMenuKeyboard(),
     });
   });
 
-  // 4. Fallback Handler for Interactive Callbacks
-  bot.on("callback_query:data", async (ctx) => {
-    const action = ctx.callbackQuery.data;
-    await ctx.answerCallbackQuery({ text: `चयनित: ${action}` });
-    await ctx.reply(`[Domain-03 Gateway] एक्शन '${action}' प्राप्त हुआ। मॉड्यूल लोड हो रहा है...`);
+  // 4. Command: /menu (9-Card Main Navigation Console)
+  bot.command("menu", handleMenuCommand);
+
+  // 5. Interactive Callback Dispatcher (9-Card Navigation Router)
+  bot.on("callback_query:data", handleMenuCallback);
+
+  // 6. Global Bot Error Boundary (Fail-Closed Catch-All)
+  bot.catch((err) => {
+    const ctx = err.ctx;
+    const error = err.error;
+    const traceId = CanonicalIdGenerator.generateTraceId();
+    console.error(`[Domain-03 Bot Error] Trace: ${traceId}`, error);
+    void ctx.reply(`⚠️ [Domain-03 Fail-Closed] सेवा अस्थायी रूप से बाधित है। Trace: \`${traceId}\``, {
+      parse_mode: "Markdown",
+    });
   });
 
   return bot;
