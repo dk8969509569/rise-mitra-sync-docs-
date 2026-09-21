@@ -254,6 +254,7 @@ model D07_AffiliateProfile {
   downlines              D07_AffiliateProfile[] @relation("AffiliateHierarchy")
   tree_path              String                 @default("/")
   tree_depth             Int                    @default(0)
+  status                 String                 @default("ACTIVE")
   direct_referrals_count Int                    @default(0)
   total_downline_count   Int                    @default(0)
   total_team_volume      Decimal                @default(0.00) @db.Decimal(12, 2)

@@ -9,16 +9,7 @@
 import { createHash, randomBytes } from "crypto";
 
 // 1. DOMAIN IDENTIFIERS TAXONOMY
-export type DomainCode =
-  | "D00_GOVERNANCE"
-  | "D01_INFRASTRUCTURE"
-  | "D02_CLOUD_STORAGE"
-  | "D03_BOT_UI"
-  | "D04_INTEGRATIONS"
-  | "D05_TRADING_CORE"
-  | "D06_RECURRING_VALUE"
-  | "D07_AFFILIATE_LEDGER"
-  | "D08_MAINTENANCE";
+export type DomainCode = string;
 
 // 2. UNIFIED PROTOCOL RESULT ENVELOPE (File-11 & Master Compilation Spec)
 export interface ServiceResult<T> {
