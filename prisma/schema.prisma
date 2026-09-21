@@ -308,3 +308,107 @@ model D07_PayoutAuditTrail {
   notes               String?
   timestamp           DateTime @default(now())
 }
+// =============================================================================
+// PHASE 2: HYPERLOCAL SECTORS, MERCHANT KYB & GIG LOGISTICS (MODELS 23 TO 26)
+// =============================================================================
+
+// Model 23: D04_SectorRegistry (Universal 30-Sector Registry & Convenience Fee Corridor)
+model D04_SectorRegistry {
+  id                    String                   @id @default(uuid()) @db.Uuid
+  sector_code           String                   @unique @db.VarChar(50)
+  name                  String                   @db.VarChar(100)
+  category              String                   @default("RETAIL") @db.VarChar(50)
+  p_floor_paise         Int                      @default(200)
+  p_ceiling_paise       Int                      @default(1000)
+  convenience_fee_paise Int                      @default(300)
+  is_active             Boolean                  @default(true)
+  is_owner_locked       Boolean                  @default(true)
+  created_at            DateTime                 @default(now()) @db.Timestamptz
+  updated_at            DateTime                 @updatedAt @db.Timestamptz
+
+  merchants             D04_MerchantProfile[]
+  fulfilment_templates  D04_FulfilmentTemplate[]
+  orders                D08_HyperlocalOrder[]
+
+  @@map("d04_sector_registry")
+}
+
+// Model 24: D04_MerchantProfile (0% Commission, Trade KYB & License Expiry Sentinel)
+model D04_MerchantProfile {
+  id                    String              @id @default(uuid()) @db.Uuid
+  user_id               String              @db.Uuid
+  sector_id             String              @db.Uuid
+  business_name         String              @db.VarChar(150)
+  trade_license_no      String?             @db.VarChar(100)
+  gstin                 String?             @db.VarChar(30)
+  fssai_no              String?             @db.VarChar(30)
+  kyb_status            String              @default("PENDING") @db.VarChar(30)
+  license_expiry_date   DateTime?           @db.Timestamptz
+  product_margin_pct    Decimal             @default(0.00) @db.Decimal(5, 2)
+  is_sponsored_fee      Boolean             @default(false)
+  is_active             Boolean             @default(true)
+  created_at            DateTime            @default(now()) @db.Timestamptz
+  updated_at            DateTime            @updatedAt @db.Timestamptz
+
+  sector                D04_SectorRegistry  @relation(fields: [sector_id], references: [id], onDelete: Restrict)
+  orders                D08_HyperlocalOrder[]
+
+  @@index([user_id])
+  @@index([sector_id])
+  @@index([kyb_status])
+  @@map("d04_merchant_profiles")
+}
+
+// Model 25: D04_FulfilmentTemplate (SLA Dispatch Rules, Gender Shield & OTP Gate)
+model D04_FulfilmentTemplate {
+  id                         String              @id @default(uuid()) @db.Uuid
+  template_code              String              @unique @db.VarChar(50)
+  sector_id                  String              @db.Uuid
+  name                       String              @db.VarChar(100)
+  sla_delivery_minutes       Int                 @default(30)
+  requires_otp               Boolean             @default(true)
+  requires_huid_verification Boolean             @default(false)
+  requires_gender_shield     Boolean             @default(false)
+  base_runner_payout_paise   Int                 @default(2500)
+  weather_surcharge_paise    Int                 @default(0)
+  is_active                  Boolean             @default(true)
+  created_at                 DateTime            @default(now()) @db.Timestamptz
+  updated_at                 DateTime            @updatedAt @db.Timestamptz
+
+  sector                     D04_SectorRegistry  @relation(fields: [sector_id], references: [id], onDelete: Cascade)
+  orders                     D08_HyperlocalOrder[]
+
+  @@index([sector_id])
+  @@map("d04_fulfilment_templates")
+}
+
+// Model 26: D08_HyperlocalOrder (1km Radius Dispatch, OTP Escrow & Atomic Settlement)
+model D08_HyperlocalOrder {
+  id                       String                 @id @default(uuid()) @db.Uuid
+  order_number             String                 @unique @db.VarChar(64)
+  sector_id                String                 @db.Uuid
+  merchant_id              String                 @db.Uuid
+  customer_id              String                 @db.Uuid
+  runner_id                String?                @db.Uuid
+  template_id              String                 @db.Uuid
+  order_gross_paise        BigInt
+  convenience_fee_paise    Int                    @default(300)
+  runner_payout_paise      Int                    @default(2500)
+  otp_code_hash            String                 @db.VarChar(64)
+  status                   String                 @default("INITIATED") @db.VarChar(30)
+  escrow_cleared           Boolean                @default(false)
+  delivery_distance_meters Int                    @default(1000)
+  created_at               DateTime               @default(now()) @db.Timestamptz
+  updated_at               DateTime               @updatedAt @db.Timestamptz
+
+  sector                   D04_SectorRegistry     @relation(fields: [sector_id], references: [id], onDelete: Restrict)
+  merchant                 D04_MerchantProfile    @relation(fields: [merchant_id], references: [id], onDelete: Restrict)
+  template                 D04_FulfilmentTemplate @relation(fields: [template_id], references: [id], onDelete: Restrict)
+
+  @@index([merchant_id])
+  @@index([customer_id])
+  @@index([runner_id])
+  @@index([status])
+  @@map("d08_hyperlocal_orders")
+}
+
