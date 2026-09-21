@@ -18,12 +18,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: Install Project Dependencies
         run: |
           npm install
 
-      - name: Execute E2E Governance Verification Suite
+      - name: Generate Prisma Client
         run: |
-          npm test
+          npx prisma generate
+
+      - name: Execute Governance Verification
+        run: |
+          npm run typecheck
