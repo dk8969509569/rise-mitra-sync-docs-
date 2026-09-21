@@ -86,8 +86,8 @@ export class DPDPGovernanceService {
 
     // Atomic transaction ensuring zero orphan records and preserving ledger
     await this.prisma.$transaction(async (tx) => {
-      // 1. Check if user exists
-      const user = await tx.userProfile.findUnique({
+      // 1. Check if user exists in D04_TelegramUser
+      const user = await tx.d04_TelegramUser.findUnique({
         where: { id: userId },
       });
 
@@ -96,28 +96,26 @@ export class DPDPGovernanceService {
       }
 
       // 2. Anonymize user profile (Zero PII retention)
-      await tx.userProfile.update({
+      await tx.d04_TelegramUser.update({
         where: { id: userId },
         data: {
-          telegram_username: null,
+          username: null,
           first_name: "DECOMMISSIONED_CITIZEN",
-          last_name: "TOMBSTONED",
-          is_active: false,
-          state: "TOMBSTONED",
+          is_registered: false,
+          current_role: "TOMBSTONED",
           updated_at: new Date(),
         },
       });
 
-      // 3. Immutable Security Audit Entry
-      await tx.securityAuditLog.create({
+      // 3. Immutable Security Audit Entry in D00_OwnerAuditLog
+      await tx.d00_OwnerAuditLog.create({
         data: {
-          id: `SEC-AUD-${randomBytes(8).toString("hex")}`,
-          user_id: tombstoneId, // Reference pseudonym
-          event_type: "DPDP_PII_PURGE_SUCCESS",
-          severity: "INFO",
+          action: "DPDP_PII_PURGE_SUCCESS",
+          actor_id: tombstoneId,
+          target_domain: "DOMAIN_07_GOVERNANCE",
           payload_hash: createHash("sha256").update(`${userId}:${reason}:${Date.now()}`).digest("hex"),
-          ip_address: "127.0.0.1",
-          created_at: new Date(),
+          details: `Tombstone executed for user: ${tombstoneId}. Reason: ${reason}`,
+          timestamp: new Date(),
         },
       });
     });
@@ -131,11 +129,10 @@ export class DPDPGovernanceService {
    */
   public async scanRevokedConsentsCron(): Promise<number> {
     logger.info("Starting automated DPDP 24-hour consent revocation sweep");
-    // Sweeps revoked sessions or flagged profiles
-    const pendingRevocations = await this.prisma.userProfile.findMany({
+    // Sweeps decommissioned profiles
+    const pendingRevocations = await this.prisma.d04_TelegramUser.findMany({
       where: {
-        is_active: false,
-        state: "PENDING_PURGE",
+        current_role: "PENDING_PURGE",
       },
       take: 100,
     });
