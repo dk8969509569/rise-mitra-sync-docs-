@@ -1,0 +1,53 @@
+{
+  "name": "Rise Mitra — Swasthya aur Swavalamban",
+  "short_name": "RiseMitra",
+  "description": "Sovereign Multi-Utility Omni-Super-App for Health, Education, Hyperlocal Commerce & Fair Direct-Selling Ledger",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "dir": "ltr",
+  "lang": "hi-IN",
+  "categories": ["business", "finance", "shopping", "health"],
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=192&h=192&q=80",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=512&h=512&q=80",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "9-Card Grid Hub",
+      "short_name": "Hub",
+      "description": "Direct access to Rise Mitra 9 revenue verticals",
+      "url": "/index.html#hub",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=192&h=192&q=80",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ledger Balance",
+      "short_name": "Ledger",
+      "description": "View transparent double-entry balance and pass-through ledger",
+      "url": "/index.html#ledger",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=192&h=192&q=80",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
