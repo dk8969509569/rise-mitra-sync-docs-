@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rise Mitra — Swasthya aur Swavalamban</title>
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#10b981', 600: '#059669', 950: '#022c22' },
+            surface: { 800: '#111827', 900: '#0b0f19', 950: '#030712' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .glass-card {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(11, 15, 25, 0.95) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .wallet-card {
+      background: radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
+                  linear-gradient(135deg, #064e3b 0%, #022c22 40%, #0b0f19 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+    }
+    .nav-glass {
+      background: rgba(3, 7, 18, 0.88);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-surface-950 text-slate-100 min-h-screen pb-24 select-none antialiased font-sans">
+
+  <!-- Top Status Bar / Header -->
+  <header class="sticky top-0 z-40 bg-surface-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25">
+        RM
+      </div>
+      <div>
+        <div class="flex items-center space-x-1.5">
+          <h1 class="text-sm font-extrabold tracking-tight text-white leading-none">Rise Mitra</h1>
+          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">PRO</span>
+        </div>
+        <p class="text-[10px] text-slate-400 font-medium tracking-wide mt-0.5">स्वास्थ्य और स्वावलंबन</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-2">
+      <!-- Live Indicator -->
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm">
+        <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live
+      </span>
+      <!-- DPDP Masked ID -->
+      <span class="text-[11px] font-mono font-medium bg-slate-900 border border-slate-800 px-2 py-1 rounded-lg text-slate-300">
+        USR-***489
+      </span>
+    </div>
+  </header>
+
+  <!-- DPDP 2023 Trust Banner -->
+  <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900/60 to-emerald-950/40 border-b border-emerald-500/20 px-4 py-2 flex items-center justify-between text-[11px]">
+    <div class="flex items-center space-x-2 text-emerald-300/90 font-medium">
+      <span>🛡️</span>
+      <span>100% डेटा सुरक्षा • DPDP 2023 एन्क्रिप्टेड लेजर</span>
+    </div>
+    <span class="text-[10px] text-slate-500 font-bold">ZEL-PASS</span>
+  </div>
+
+  <main class="max-w-md mx-auto p-4 space-y-5">
+    
+    <!-- Hero Fintech Wallet Card -->
+    <div class="wallet-card p-5 rounded-3xl relative overflow-hidden">
+      <!-- Background Ambient Glow -->
+      <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="flex justify-between items-start mb-3">
+        <div>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-emerald-200/80">उपलब्ध शेष राशि (RM Cash)</span>
+          <div class="flex items-baseline space-x-2 mt-1">
+            <span class="text-3xl font-black text-white tracking-tight">₹0.00</span>
+            <span class="text-[11px] text-emerald-400 font-mono font-medium">● 100% सॉल्वेंट</span>
+          </div>
+        </div>
+        <span class="text-[10px] bg-emerald-950/80 text-emerald-300 font-bold border border-emerald-500/40 px-2.5 py-1 rounded-full shadow-inner">
+          28% NCR Cap
+        </span>
+      </div>
+
+      <div class="flex justify-between items-center text-[10px] text-emerald-200/60 font-mono border-t border-emerald-500/20 pt-2.5 mt-2">
+        <span>CoverageRatio: 1.00</span>
+        <span>डबल-एंट्री लेजर: सुरक्षित</span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-2.5">
+        <button class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+          <span>+</span>
+          <span>राशि जोड़ें</span>
+        </button>
+        <button class="bg-slate-900/80 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs border border-slate-700/60 flex items-center justify-center space-x-1.5 active:scale-95 transition-all">
+          <span>📜</span>
+          <span>खाता विवरणी</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Action / Discovery Section Header -->
+    <div class="flex justify-between items-end px-1">
+      <div>
+        <h2 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">9 Core Verticals</h2>
+        <p class="text-[11px] text-white font-bold mt-0.5">कमाई एवं सेवा केंद्र</p>
+      </div>
+      <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-800/40 px-2 py-0.5 rounded-full">
+        ₹0 Joining Fee
+      </span>
+    </div>
+
+    <!-- The 9-Card High-Converting Grid -->
+    <div class="grid grid-cols-3 gap-3">
+      
+      <!-- Card 1: Health -->
+      <div class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          🌿
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">स्वस्थ मन</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">वेलनेस गाइड</span>
+        <span class="mt-1 text-[8px] font-bold text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">सुरक्षित</span>
+      </div>
+
+      <!-- Card 2: Skill & Creator -->
+      <div class="glass-card hover:border-teal-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-teal-950/60 border border-teal-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          🎓
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">हुनर सीखें</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">डिजिटल वर्कशॉप</span>
+        <span class="mt-1 text-[8px] font-bold text-teal-300 bg-teal-950/80 px-1.5 py-0.5 rounded border border-teal-500/30">70% शेयर</span>
+      </div>
+
+      <!-- Card 3: Hyperlocal Kirana -->
+      <div class="glass-card hover:border-amber-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          🛒
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">किराना स्टोर</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">लोकल ऑर्डर</span>
+        <span class="mt-1 text-[8px] font-bold text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-500/30">0% फ़ीस</span>
+      </div>
+
+      <!-- Card 4: Gig Runners -->
+      <div class="glass-card hover:border-sky-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-sky-950/60 border border-sky-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          ⚡
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">रनर डिलीवरी</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">हाइपरलोकल गिग</span>
+        <span class="mt-1 text-[8px] font-bold text-sky-300 bg-sky-950/80 px-1.5 py-0.5 rounded border border-sky-500/30">₹25-50 पास</span>
+      </div>
+
+      <!-- Card 5: B2B Micro-SaaS -->
+      <div class="glass-card hover:border-indigo-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          💼
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">B2B SaaS</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">ऑटोमेशन किट</span>
+        <span class="mt-1 text-[8px] font-bold text-indigo-300 bg-indigo-950/80 px-1.5 py-0.5 rounded border border-indigo-500/30">आवर्ती आय</span>
+      </div>
+
+      <!-- Card 6: Professionals -->
+      <div class="glass-card hover:border-violet-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-violet-950/60 border border-violet-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          ⚖️
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">विशेषज्ञ सेवा</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">CA व विधिक सलाह</span>
+        <span class="mt-1 text-[8px] font-bold text-violet-300 bg-violet-950/80 px-1.5 py-0.5 rounded border border-violet-500/30">सत्यापित</span>
+      </div>
+
+      <!-- Card 7: Mentorship Pod -->
+      <div class="glass-card hover:border-rose-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          👥
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">मेंटर पॉड</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">टीम गाइडेंस</span>
+        <span class="mt-1 text-[8px] font-bold text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-500/30">70:30 Pod</span>
+      </div>
+
+      <!-- Card 8: Transparent Ledger -->
+      <div class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          📊
+        </div>
+        <span class="text-xs font-bold text-white mt-2 leading-tight">पारदर्शी लेजर</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">रियल-टाइम पास</span>
+        <span class="mt-1 text-[8px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">डबल-एंट्री</span>
+      </div>
+
+      <!-- Card 9: Emergency SOS -->
+      <div class="glass-card hover:border-red-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group bg-red-950/20">
+        <div class="w-11 h-11 rounded-2xl bg-red-900/50 border border-red-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+          🚨
+        </div>
+        <span class="text-xs font-bold text-red-400 mt-2 leading-tight">इमरजेंसी SOS</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">तुरंत सहायता</span>
+        <span class="mt-1 text-[8px] font-bold text-red-400 bg-red-950 px-1.5 py-0.5 rounded border border-red-800">1-टैप</span>
+      </div>
+
+    </div>
+
+    <!-- Sovereign Owner System Access (Discreet Link) -->
+    <div class="text-center pt-2">
+      <button onclick="document.getElementById('ownerConsole').classList.toggle('hidden')" class="text-[10px] text-slate-600 hover:text-slate-400 underline tracking-wide">
+        ⚙️ सॉवरेन सिस्टम कंसोल (ओनर कंट्रोल)
+      </button>
+    </div>
+
+    <!-- Surface-B: Sovereign Owner Console Modal (Hidden by Default) -->
+    <div id="ownerConsole" class="hidden glass-card p-4 rounded-3xl border border-amber-500/40 space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <span class="text-xs font-extrabold text-amber-400 tracking-wide">🛡️ सॉवरेन कंट्रोल पैनल (Gate 23 Mode)</span>
+        <span class="text-[9px] font-bold bg-amber-950 text-amber-300 px-2 py-0.5 rounded-full border border-amber-800">ROOT-SOVEREIGN</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center text-[10px]">
+        <div class="bg-slate-950/80 p-2 rounded-xl border border-slate-800">
+          <div class="text-slate-400">Kill-Switch</div>
+          <div class="text-emerald-400 font-extrabold mt-0.5">NORMAL (L0)</div>
+        </div>
+        <div class="bg-slate-950/80 p-2 rounded-xl border border-slate-800">
+          <div class="text-slate-400">CoverageRatio</div>
+          <div class="text-emerald-400 font-extrabold mt-0.5">1.00 (PASS)</div>
+        </div>
+        <div class="bg-slate-950/80 p-2 rounded-xl border border-slate-800">
+          <div class="text-slate-400">NCR Cap</div>
+          <div class="text-emerald-400 font-extrabold mt-0.5">28.00% MAX</div>
+        </div>
+      </div>
+      <p class="text-[9px] text-slate-500 text-center font-mono">
+        438 Reconciled Elements Verified • Fail-Closed Circuit Breaker Armed
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Bottom Floating Navigation Bar -->
+  <nav class="fixed bottom-0 inset-x-0 z-50 nav-glass px-6 py-2">
+    <div class="max-w-md mx-auto flex justify-between items-center text-center">
+      <a href="#hub" class="flex flex-col items-center text-emerald-400 group">
+        <span class="text-lg group-hover:scale-110 transition">🏠</span>
+        <span class="text-[10px] font-bold mt-0.5">होम</span>
+      </a>
+      <a href="#orders" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+        <span class="text-lg group-hover:scale-110 transition">📦</span>
+        <span class="text-[10px] font-semibold mt-0.5">ऑर्डर</span>
+      </a>
+      <a href="#ledger" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+        <span class="text-lg group-hover:scale-110 transition">💰</span>
+        <span class="text-[10px] font-semibold mt-0.5">खाता</span>
+      </a>
+      <a href="#profile" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+        <span class="text-lg group-hover:scale-110 transition">👤</span>
+        <span class="text-[10px] font-semibold mt-0.5">प्रोफ़ाइल</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((reg) => console.log('[PWA] Service Worker Registered! Scope:', reg.scope))
+          .catch((err) => console.error('[PWA] Service Worker Registration Failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
