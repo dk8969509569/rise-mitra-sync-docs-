@@ -1,0 +1,73 @@
+/* =========================================================================
+   RISE MITRA (RM WORLD) - THEME & TRAFFIC LIGHT TOKENS
+   Light (#ffffff), Dark (#0f172a), System Auto & 3-Tier Status Engine
+   ========================================================================= */
+
+:root {
+  --rm-header-height: 3.75rem;
+  --rm-bottom-bar-height: 4rem;
+  --rm-radius-sm: 0.375rem;
+  --rm-radius-md: 0.625rem;
+  --rm-radius-lg: 1rem;
+  --rm-transition-fast: 0.15s ease;
+  --rm-transition-normal: 0.25s ease;
+
+  /* Traffic Light Permanent LED Dots */
+  --rm-traffic-green-dot: #16a34a;
+  --rm-traffic-amber-dot: #d97706;
+  --rm-traffic-red-dot: #dc2626;
+}
+
+/* Light Theme (High-contrast outdoor visibility) */
+html[data-theme="light"] {
+  --rm-bg-primary: #ffffff;
+  --rm-bg-secondary: #f8fafc;
+  --rm-bg-card: #f1f5f9;
+  --rm-text-primary: #0f172a;
+  --rm-text-secondary: #475569;
+  --rm-text-muted: #64748b;
+  --rm-border-color: #cbd5e1;
+  --rm-brand-accent: #2563eb;
+  --rm-brand-accent-hover: #1d4ed8;
+  --rm-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  /* Traffic Light (Light Mode Background & Borders) */
+  --rm-traffic-green-bg: #dcfce7;
+  --rm-traffic-green-text: #14532d;
+  --rm-traffic-green-border: #86efac;
+
+  --rm-traffic-amber-bg: #fef3c7;
+  --rm-traffic-amber-text: #78350f;
+  --rm-traffic-amber-border: #fcd34d;
+
+  --rm-traffic-red-bg: #fee2e2;
+  --rm-traffic-red-text: #7f1d1d;
+  --rm-traffic-red-border: #fca5a5;
+}
+
+/* Dark Theme (High-contrast OLED night mode) */
+html[data-theme="dark"] {
+  --rm-bg-primary: #0f172a;
+  --rm-bg-secondary: #1e293b;
+  --rm-bg-card: #334155;
+  --rm-text-primary: #f8fafc;
+  --rm-text-secondary: #cbd5e1;
+  --rm-text-muted: #94a3b8;
+  --rm-border-color: #475569;
+  --rm-brand-accent: #3b82f6;
+  --rm-brand-accent-hover: #60a5fa;
+  --rm-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  /* Traffic Light (Dark Mode Background & Borders) */
+  --rm-traffic-green-bg: #052e16;
+  --rm-traffic-green-text: #86efac;
+  --rm-traffic-green-border: #166534;
+
+  --rm-traffic-amber-bg: #451a03;
+  --rm-traffic-amber-text: #fde68a;
+  --rm-traffic-amber-border: #92400e;
+
+  --rm-traffic-red-bg: #450a0a;
+  --rm-traffic-red-text: #fca5a5;
+  --rm-traffic-red-border: #991b1b;
+}
