@@ -1,0 +1,370 @@
+/* =========================================================================
+   RISE MITRA (RM WORLD) - LAYOUT & TRAFFIC LIGHT UI COMPONENTS
+   Structure: Header, Traffic Light Badges, Drawer, Grid, Bottom Nav
+   ========================================================================= */
+
+/* Top Sticky Header */
+.rm-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: var(--rm-header-height);
+  background-color: var(--rm-bg-primary);
+  border-bottom: 1px solid var(--rm-border-color);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.rm-header-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rm-icon-btn {
+  background: transparent;
+  border: 1px solid var(--rm-border-color);
+  color: var(--rm-text-primary);
+  border-radius: var(--rm-radius-sm);
+  padding: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.rm-brand {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 0.2rem;
+}
+.rm-brand-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--rm-brand-accent);
+  letter-spacing: -0.02em;
+}
+
+/* =========================================================================
+   TRAFFIC LIGHT (GREEN / AMBER / RED) COMPONENT ENGINE
+   ========================================================================= */
+.rm-traffic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  width: fit-content;
+  line-height: 1;
+}
+
+/* Pulsing LED status dot */
+.rm-traffic-pill::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+/* 🟢 GREEN: Solvent (CoverageRatio >= 1.00 & NCR <= 28%) */
+.rm-traffic-green {
+  background-color: var(--rm-traffic-green-bg);
+  color: var(--rm-traffic-green-text);
+  border-color: var(--rm-traffic-green-border);
+}
+.rm-traffic-green::before {
+  background-color: var(--rm-traffic-green-dot);
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  animation: rm-pulse-green 2s infinite;
+}
+
+/* 🟡 AMBER: Warning / Offline Pending Sync */
+.rm-traffic-amber {
+  background-color: var(--rm-traffic-amber-bg);
+  color: var(--rm-traffic-amber-text);
+  border-color: var(--rm-traffic-amber-border);
+}
+.rm-traffic-amber::before {
+  background-color: var(--rm-traffic-amber-dot);
+  box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7);
+  animation: rm-pulse-amber 1.5s infinite;
+}
+
+/* 🔴 RED: Breach Alert / Transaction Freeze (CoverageRatio < 1.00) */
+.rm-traffic-red {
+  background-color: var(--rm-traffic-red-bg);
+  color: var(--rm-traffic-red-text);
+  border-color: var(--rm-traffic-red-border);
+}
+.rm-traffic-red::before {
+  background-color: var(--rm-traffic-red-dot);
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8);
+  animation: rm-pulse-red 0.8s infinite;
+}
+
+/* LED Pulse Animations */
+@keyframes rm-pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+@keyframes rm-pulse-amber {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(217, 119, 6, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+}
+
+@keyframes rm-pulse-red {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 7px rgba(220, 38, 38, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+/* Search Bar Container */
+.rm-search-container {
+  flex: 1;
+  position: relative;
+  min-width: 140px;
+}
+
+.rm-search-input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--rm-radius-md);
+  border: 1px solid var(--rm-border-color);
+  background: var(--rm-bg-secondary);
+  color: var(--rm-text-primary);
+  font-size: 0.95rem;
+}
+
+.rm-search-input:focus {
+  outline: 2px solid var(--rm-brand-accent);
+}
+
+/* Masked Identity Token (DPDP 2023) */
+.rm-user-identity {
+  flex-shrink: 0;
+}
+.rm-user-badge {
+  font-size: 0.75rem;
+  font-family: monospace;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  background: var(--rm-bg-card);
+  border: 1px solid var(--rm-border-color);
+  border-radius: var(--rm-radius-sm);
+  color: var(--rm-text-secondary);
+}
+
+/* Main Viewport Container */
+.rm-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1rem calc(var(--rm-bottom-bar-height) + 1.5rem) 1rem;
+}
+
+.rm-card {
+  background: var(--rm-bg-secondary);
+  border: 1px solid var(--rm-border-color);
+  border-radius: var(--rm-radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--rm-card-shadow);
+  margin-bottom: 1.25rem;
+}
+
+/* Grid Actions */
+.rm-grid-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.rm-action-tile {
+  background: var(--rm-bg-card);
+  border: 1px solid var(--rm-border-color);
+  border-radius: var(--rm-radius-md);
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--rm-text-primary);
+  transition: transform var(--rm-transition-fast);
+}
+
+.rm-action-tile:active {
+  transform: scale(0.97);
+}
+
+.rm-tile-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+.rm-tile-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Two-Tier Drawer Navigation */
+.rm-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.rm-drawer[aria-hidden="false"] {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.rm-drawer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity var(--rm-transition-normal);
+}
+
+.rm-drawer[aria-hidden="false"] .rm-drawer-overlay {
+  opacity: 1;
+}
+
+.rm-drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(85vw, 360px);
+  background: var(--rm-bg-primary);
+  transform: translateX(-100%);
+  transition: transform var(--rm-transition-normal);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.rm-drawer[aria-hidden="false"] .rm-drawer-panel {
+  transform: translateX(0);
+}
+
+.rm-drawer-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--rm-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rm-drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.rm-accordion {
+  margin-bottom: 1rem;
+  border: 1px solid var(--rm-border-color);
+  border-radius: var(--rm-radius-md);
+  padding: 0.5rem;
+}
+
+.rm-accordion-summary {
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+  color: var(--rm-text-primary);
+}
+
+.rm-category-list {
+  list-style: none;
+  padding: 0.5rem 0 0.5rem 0.75rem;
+}
+
+.rm-category-list li {
+  margin-bottom: 0.5rem;
+}
+
+.rm-category-list a {
+  text-decoration: none;
+  color: var(--rm-text-secondary);
+  font-size: 0.95rem;
+}
+
+.rm-drawer-footer {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--rm-border-color);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rm-drawer-link {
+  text-decoration: none;
+  color: var(--rm-text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Bottom Navigation Bar */
+.rm-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: var(--rm-bottom-bar-height);
+  background: var(--rm-bg-primary);
+  border-top: 1px solid var(--rm-border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 90;
+  padding: 0.25rem 0;
+}
+
+.rm-bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--rm-text-muted);
+  flex: 1;
+  padding: 0.25rem;
+}
+
+.rm-bottom-item.active {
+  color: var(--rm-brand-accent);
+}
+
+.rm-bottom-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.rm-bottom-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
