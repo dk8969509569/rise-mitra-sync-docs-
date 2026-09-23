@@ -1,0 +1,57 @@
+{
+  "name": "Rise Mitra (RM WORLD)",
+  "short_name": "RM WORLD",
+  "description": "Sovereign Merchant Bahi-Khata, Hyperlocal ONDC Commerce, and Community Utility Hub",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "dir": "ltr",
+  "lang": "hi-IN",
+  "categories": [
+    "business",
+    "shopping",
+    "productivity",
+    "utilities",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "बहीखाता (Bahi-Khata)",
+      "short_name": "बहीखाता",
+      "description": "सॉवरेन मर्चेंट बहीखाता लेज़र खोलें",
+      "url": "./index.html#merchant-khata",
+      "icons": [{ "src": "./assets/icons/khata-shortcut.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "किराना स्टोर (Kirana)",
+      "short_name": "किराना",
+      "description": "0% कमीशन हाइपरलोकल स्टोर",
+      "url": "./index.html#kirana-store",
+      "icons": [{ "src": "./assets/icons/store-shortcut.png", "sizes": "96x96" }]
+    }
+  ],
+  "prefer_related_applications": false
+}
