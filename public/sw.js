@@ -1,14 +1,14 @@
-// Rise Mitra Sovereign PWA — Service Worker Caching Engine
+// Rise Mitra Sovereign PWA - Service Worker Caching Engine
 // Canonical Binding: RM-SPEC-F14-PWA-02 | File-14 Section Q
-const CACHE_NAME = 'rise-mitra-v1.0.0';
+const CACHE_NAME = 'rise-mitra-v2.0.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/api-client.js',
   'https://cdn.tailwindcss.com',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=192&h=192&q=80',
-  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=512&h=512&q=80'
+  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80',
+  'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=512&q=80'
 ];
 
 // Install Event: Pre-cache Static Shell
@@ -41,7 +41,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // API Requests: Network-First with Graceful Fallback
+  // API Requests: Network-first with graceful fallback
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(
       fetch(event.request)
@@ -66,15 +66,16 @@ self.addEventListener('fetch', (event) => {
         response ||
         fetch(event.request).then((networkResponse) => {
           if (
-            networkResponse &&
-            networkResponse.status === 200 &&
-            networkResponse.type === 'basic'
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
           ) {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+            return networkResponse;
           }
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
           return networkResponse;
         })
       );
