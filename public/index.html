@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="hi" class="dark">
+<html lang="hi" class="dark" data-theme="dark" data-font-scale="standard">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#030712">
+  <meta name="description" content="Rise Mitra (RM WORLD) - Sovereign Offline-First Super App & Bahi-Khata">
   <title>Rise Mitra — Swasthya aur Swavalamban</title>
-  
+
   <!-- PWA & Mobile Meta Tags -->
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
+
+  <!-- Core CSS Engine (Zero-Loss Integration) -->
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="stylesheet" href="/css/layout.css">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -26,6 +33,7 @@
       }
     }
   </script>
+
   <style>
     body { -webkit-tap-highlight-color: transparent; }
     .glass-card {
@@ -44,6 +52,28 @@
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
+    /* Dedicated 50-Categories Navigation Strip Tactile Press Effect */
+    .rm-nav-strip-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(0, 220, 130, 0.14) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1px solid rgba(0, 220, 130, 0.35);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease-out, opacity 0.12s ease-out, box-shadow 0.12s ease-out;
+    }
+    .rm-nav-strip-btn:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
   </style>
 </head>
 <body class="bg-surface-950 text-slate-100 min-h-screen pb-24 select-none antialiased font-sans">
@@ -51,7 +81,8 @@
   <!-- Top Status Bar / Header -->
   <header class="sticky top-0 z-40 bg-surface-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25">
+      <!-- [RM] Sovereign Brand Badge Logo -->
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25 flex-shrink-0">
         RM
       </div>
       <div>
@@ -64,12 +95,12 @@
     </div>
     
     <div class="flex items-center space-x-2">
-      <!-- Live Indicator -->
-      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm">
-        <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live
+      <!-- Solvency Pill (From Spec) -->
+      <span id="rm-solvency-pill" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm" aria-label="Solvency Status">
+        <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live (1.00)
       </span>
       <!-- DPDP Masked ID -->
-      <span class="text-[11px] font-mono font-medium bg-slate-900 border border-slate-800 px-2 py-1 rounded-lg text-slate-300">
+      <span id="rm-user-badge" class="text-[11px] font-mono font-medium bg-slate-900 border border-slate-800 px-2 py-1 rounded-lg text-slate-300">
         USR-***489
       </span>
     </div>
@@ -84,7 +115,41 @@
     <span class="text-[10px] text-slate-500 font-bold">ZEL-PASS</span>
   </div>
 
-  <main class="max-w-md mx-auto p-4 space-y-5">
+  <main class="max-w-md mx-auto p-4 space-y-4">
+
+    <!-- RISE MITRA: DEDICATED 50-CATEGORIES NAVIGATION STRIP BAR -->
+    <section class="rm-nav-strip-wrapper">
+      <button id="rm-menu-btn" class="rm-nav-strip-btn" type="button" aria-label="Open 50 Categories Menu" aria-expanded="false">
+        <div class="flex items-center gap-2.5">
+          <!-- ☰ Emerald Badge Icon -->
+          <div style="background:#00dc82; color:#060d17; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:900; line-height:1; box-shadow:0 2px 6px rgba(0,220,130,0.3);">
+            ☰
+          </div>
+          
+          <!-- Title & Subtitle -->
+          <div class="text-left">
+            <div class="text-[14px] font-bold text-white tracking-wide">
+              सभी 50 सेवाएं व खेल (Menu)
+            </div>
+            <div class="text-[11px] text-emerald-400 font-medium">
+              33 जन-उपयोगिताएं • 17 देसी खेल
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Pill -->
+        <div class="bg-white/10 border border-white/15 rounded-full px-3 py-1 text-[11px] text-slate-300 flex items-center gap-1">
+          <span>खोलें</span>
+          <span class="text-emerald-400 font-bold text-sm leading-none">›</span>
+        </div>
+      </button>
+    </section>
+
+    <!-- Bilingual Sub-50ms Search Box -->
+    <section class="rm-search-section relative">
+      <input type="search" id="rm-global-search" placeholder="50 श्रेणियाँ, सेवाएँ या खोज खोजें..." class="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500/50 transition" autocomplete="off">
+      <div id="rm-search-results" hidden class="absolute left-0 right-0 top-12 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto"></div>
+    </section>
     
     <!-- Hero Fintech Wallet Card -->
     <div class="wallet-card p-5 rounded-3xl relative overflow-hidden">
@@ -122,7 +187,7 @@
     </div>
 
     <!-- Quick Action / Discovery Section Header -->
-    <div class="flex justify-between items-end px-1">
+    <div class="flex justify-between items-end px-1 pt-1">
       <div>
         <h2 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">9 Core Verticals</h2>
         <p class="text-[11px] text-white font-bold mt-0.5">कमाई एवं सेवा केंद्र</p>
@@ -134,7 +199,6 @@
 
     <!-- The 9-Card High-Converting Grid -->
     <div class="grid grid-cols-3 gap-3">
-      
       <!-- Card 1: Health -->
       <div class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
@@ -224,12 +288,11 @@
         <span class="text-[9px] text-slate-400 mt-0.5">तुरंत सहायता</span>
         <span class="mt-1 text-[8px] font-bold text-red-400 bg-red-950 px-1.5 py-0.5 rounded border border-red-800">1-टैप</span>
       </div>
-
     </div>
 
     <!-- Sovereign Owner System Access (Discreet Link) -->
     <div class="text-center pt-2">
-      <button onclick="document.getElementById('ownerConsole').classList.toggle('hidden')" class="text-[10px] text-slate-600 hover:text-slate-400 underline tracking-wide">
+      <button onclick="document.getElementById('ownerConsole').classList.toggle('hidden')" class="text-[10px] text-slate-500 hover:text-slate-300 underline tracking-wide">
         ⚙️ सॉवरेन सिस्टम कंसोल (ओनर कंट्रोल)
       </button>
     </div>
@@ -259,29 +322,99 @@
       </p>
     </div>
 
+    <!-- Dynamic Views Container (Compatible with views.js) -->
+    <div id="rm-view-container" class="hidden"></div>
+
   </main>
+
+  <!-- 50 Categories Drawer Navigation Menu (Integrated Dark-Themed Surface) -->
+  <aside id="rm-drawer-menu" aria-hidden="true" style="position:fixed; top:0; left:0; bottom:0; width:300px; background:#0b0f19; border-right:1px solid rgba(255,255,255,0.1); box-shadow:4px 0 24px rgba(0,0,0,0.6); z-index:200; transform:translateX(-100%); transition:transform 0.3s ease; padding:1.25rem; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
+      <div>
+        <h3 style="margin:0; font-size:1rem; font-weight:800; color:#ffffff;">50 सफल श्रेणियाँ</h3>
+        <p style="margin:2px 0 0 0; font-size:0.7rem; color:#00dc82;">राइज मित्रा संपूर्ण कैटलॉग</p>
+      </div>
+      <button id="rm-drawer-close" aria-label="Close Menu" style="background:rgba(255,255,255,0.06); border:none; width:30px; height:30px; border-radius:8px; font-size:1rem; cursor:pointer; color:#ffffff; display:flex; align-items:center; justify-content:center;">✕</button>
+    </div>
+
+    <h4 style="font-size:0.75rem; color:#00dc82; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin:1rem 0 0.5rem 0;">आजीविका (33 सेवाएं)</h4>
+    <ul id="rm-tier1-list" style="list-style:none; padding:0; margin:0 0 1.25rem 0; font-size:0.88rem; color:#cbd5e1;"></ul>
+
+    <h4 style="font-size:0.75rem; color:#38bdf8; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin:1rem 0 0.5rem 0;">सुरक्षा व खेल (17 श्रेणियां)</h4>
+    <ul id="rm-tier2-list" style="list-style:none; padding:0; margin:0; font-size:0.88rem; color:#cbd5e1;"></ul>
+  </aside>
+  <div id="rm-drawer-backdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:190; display:none; backdrop-filter:blur(3px);"></div>
 
   <!-- Bottom Floating Navigation Bar -->
   <nav class="fixed bottom-0 inset-x-0 z-50 nav-glass px-6 py-2">
     <div class="max-w-md mx-auto flex justify-between items-center text-center">
-      <a href="#hub" class="flex flex-col items-center text-emerald-400 group">
+      <a href="#home" class="flex flex-col items-center text-emerald-400 group">
         <span class="text-lg group-hover:scale-110 transition">🏠</span>
         <span class="text-[10px] font-bold mt-0.5">होम</span>
       </a>
-      <a href="#orders" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+      <a href="#merchant-khata" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
         <span class="text-lg group-hover:scale-110 transition">📦</span>
         <span class="text-[10px] font-semibold mt-0.5">ऑर्डर</span>
       </a>
-      <a href="#ledger" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+      <a href="#kirana-store" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
         <span class="text-lg group-hover:scale-110 transition">💰</span>
         <span class="text-[10px] font-semibold mt-0.5">खाता</span>
       </a>
-      <a href="#profile" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+      <a href="#vouchers" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
         <span class="text-lg group-hover:scale-110 transition">👤</span>
         <span class="text-[10px] font-semibold mt-0.5">प्रोफ़ाइल</span>
       </a>
     </div>
   </nav>
+
+  <!-- ============================================================ -->
+  <!-- RISE MITRA (RM WORLD) - CLIENT DEPENDENCY RUNTIME INGESTION -->
+  <!-- Ordered Execution: i18n -> Trie -> Nav -> DPDP -> Solvency -> Settings -> DB -> Ledger -> Sync -> Kirana -> Views -> App -->
+  <!-- ============================================================ -->
+  <script src="/js/i18n-dict.js"></script>
+  <script src="/js/trie-search.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/consent-manager.js"></script>
+  <script src="/js/solvency-badge.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/ledger.js"></script>
+  <script src="/js/voucher-sync.js"></script>
+  <script src="/js/kirana-catalog.js"></script>
+  <script src="/js/views.js"></script>
+  <script src="/js/app.js"></script>
+
+  <!-- Zero-Dependency Drawer Click & Touch Controller -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('rm-menu-btn');
+      const closeBtn = document.getElementById('rm-drawer-close');
+      const drawer = document.getElementById('rm-drawer-menu');
+      const backdrop = document.getElementById('rm-drawer-backdrop');
+
+      function openDrawer() {
+        if (drawer) {
+          drawer.style.transform = 'translateX(0)';
+          drawer.setAttribute('aria-hidden', 'false');
+        }
+        if (backdrop) backdrop.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        if (drawer) {
+          drawer.style.transform = 'translateX(-100%)';
+          drawer.setAttribute('aria-hidden', 'true');
+        }
+        if (backdrop) backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    });
+  </script>
 
   <!-- PWA Service Worker Registration -->
   <script>
