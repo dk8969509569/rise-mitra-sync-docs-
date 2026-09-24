@@ -1,14 +1,13 @@
 /* =========================================================================
    RISE MITRA (RM WORLD) - 50 CATEGORIES NAVIGATION & ROUTING CONTROLLER
    Tier 1: 33 Applications & Utilities | Tier 2: 17 Casual Games (Anti-RMG)
+   Self-Injecting: Automatically injects ☰ Button and Drawer into DOM
    ========================================================================= */
 
 (function () {
   'use strict';
 
-  // 50 Master Canonical Categories Dataset
   const RM_CATEGORIES = [
-    // Tier 1: 33 Applications & Utilities
     { id: "c01", tier: 1, nameHi: "01. कृषि व मौसम", nameEn: "Agriculture & Weather", hash: "#agri", keywords: ["kisan", "krishi", "khet", "weather", "fasal"] },
     { id: "c02", tier: 1, nameHi: "02. पशुपालन व डेयरी", nameEn: "Animal Husbandry & Dairy", hash: "#dairy", keywords: ["dairy", "pashu", "milk", "gaay", "bhains"] },
     { id: "c03", tier: 1, nameHi: "03. हस्तशिल्प व कारीगर", nameEn: "Artisans & Handicrafts", hash: "#artisan", keywords: ["shilp", "hastshilp", "craft", "bunkar"] },
@@ -43,7 +42,6 @@
     { id: "c32", tier: 1, nameHi: "32. कचरा व कबाड़ समाधान", nameEn: "Waste & Recycling", hash: "#waste", keywords: ["kabad", "recycling", "kachra", "scrap"] },
     { id: "c33", tier: 1, nameHi: "33. युवा संगम व क्लब", nameEn: "Youth & Sports Clubs", hash: "#youth", keywords: ["khelkud", "yuva", "club", "fitness"] },
 
-    // Tier 2: 17 Free Casual Games (Strictly Anti-RMG / Zero-Gambling)
     { id: "g34", tier: 2, nameHi: "34. एक्शन (तीरंदाजी)", nameEn: "Action (Archery Desi)", hash: "#game-archery", keywords: ["teer", "dhanush", "action", "archery"] },
     { id: "g35", tier: 2, nameHi: "35. एडवेंचर (जंगल सफारी)", nameEn: "Adventure (Jungle Safari)", hash: "#game-safari", keywords: ["safari", "jungle", "adventure", "khoj"] },
     { id: "g36", tier: 2, nameHi: "36. आर्केड (गेंद टप्पा)", nameEn: "Arcade (Bounce Ball)", hash: "#game-bounce", keywords: ["ball", "arcade", "tappa"] },
@@ -63,17 +61,78 @@
     { id: "g50", tier: 2, nameHi: "50. शब्द पहेली (Word Game)", nameEn: "Word (Shabd Kosh Puzzle)", hash: "#game-word", keywords: ["shabd", "varnamala", "word"] }
   ];
 
-  // Populate Trie Index
-  function indexCategories() {
-    if (!window.rmSearchEngine) return;
-    RM_CATEGORIES.forEach(item => {
-      window.rmSearchEngine.insert(item.nameHi, item);
-      window.rmSearchEngine.insert(item.nameEn, item);
-      item.keywords.forEach(kw => window.rmSearchEngine.insert(kw, item));
-    });
+  function injectMenuButton() {
+    if (document.getElementById('rm-menu-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'rm-menu-btn';
+    btn.setAttribute('aria-label', 'Open Menu');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.style.cssText = 'background:none; border:none; color:#ffffff; cursor:pointer; padding:6px; margin-right:8px; display:inline-flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent;';
+    btn.innerHTML = `
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    `;
+
+    const allDivs = document.querySelectorAll('div, span, header');
+    let rmLogoEl = null;
+    for (let el of allDivs) {
+      if (el.children.length === 0 && el.textContent.trim() === 'RM') {
+        rmLogoEl = el;
+        break;
+      }
+    }
+
+    if (rmLogoEl && rmLogoEl.parentElement) {
+      rmLogoEl.parentElement.style.display = 'flex';
+      rmLogoEl.parentElement.style.alignItems = 'center';
+      rmLogoEl.parentElement.insertBefore(btn, rmLogoEl);
+    } else {
+      const topBar = document.querySelector('.rm-header') || document.querySelector('header') || document.body.firstElementChild;
+      if (topBar) topBar.insertBefore(btn, topBar.firstChild);
+    }
   }
 
-  // Render Drawer Menu Accordions
+  function injectDrawerDOM() {
+    if (!document.getElementById('rm-drawer-backdrop')) {
+      const backdrop = document.createElement('div');
+      backdrop.id = 'rm-drawer-backdrop';
+      backdrop.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); backdrop-filter:blur(3px); z-index:9998; display:none;';
+      document.body.appendChild(backdrop);
+    }
+
+    if (!document.getElementById('rm-drawer-menu')) {
+      const drawer = document.createElement('aside');
+      drawer.id = 'rm-drawer-menu';
+      drawer.setAttribute('aria-hidden', 'true');
+      drawer.style.cssText = 'position:fixed; top:0; left:0; width:310px; max-width:85vw; height:100vh; background:#080e14; color:#f0f6fc; z-index:9999; transform:translateX(-100%); transition:transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); overflow-y:auto; box-shadow:5px 0 25px rgba(0,0,0,0.6); padding:1rem; box-sizing:border-box; font-family:system-ui,-apple-system,sans-serif;';
+      drawer.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:0.75rem; border-bottom:1px solid #21262d; margin-bottom:1rem;">
+          <div style="font-weight:700; font-size:1.1rem; color:#00dc82; display:flex; align-items:center; gap:8px;">
+            <span>☰</span> RM WORLD (50 सेवाएं)
+          </div>
+          <button id="rm-drawer-close" aria-label="Close Menu" style="background:none; border:none; color:#f0f6fc; font-size:1.5rem; cursor:pointer; padding:4px 8px;">✕</button>
+        </div>
+        
+        <div>
+          <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:#8b949e; letter-spacing:0.5px; margin-bottom:0.6rem;">
+            Tier 1: 33 Applications & Utilities
+          </div>
+          <ul id="rm-tier1-list" style="list-style:none; padding:0; margin:0 0 1.5rem 0;"></ul>
+
+          <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:#8b949e; letter-spacing:0.5px; margin-bottom:0.6rem;">
+            Tier 2: 17 Free Casual Games (Anti-RMG)
+          </div>
+          <ul id="rm-tier2-list" style="list-style:none; padding:0; margin:0;"></ul>
+        </div>
+      `;
+      document.body.appendChild(drawer);
+    }
+  }
+
   function renderDrawerMenu() {
     const tier1Container = document.getElementById('rm-tier1-list');
     const tier2Container = document.getElementById('rm-tier2-list');
@@ -84,10 +143,12 @@
 
     RM_CATEGORIES.forEach(item => {
       const li = document.createElement('li');
+      li.style.cssText = 'margin-bottom:6px;';
       const a = document.createElement('a');
       a.href = item.hash;
       a.textContent = item.nameHi;
       a.setAttribute('data-en', item.nameEn);
+      a.style.cssText = 'display:block; padding:0.6rem 0.8rem; border-radius:8px; color:#e6edf3; text-decoration:none; font-size:0.9rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); transition:background 0.2s;';
       li.appendChild(a);
 
       if (item.tier === 1) {
@@ -98,17 +159,14 @@
     });
   }
 
-  // Drawer Toggle Handlers (Style + Backdrop + Delegated Event)
   function bindDrawerEvents() {
     const drawer = document.getElementById('rm-drawer-menu');
     const backdrop = document.getElementById('rm-drawer-backdrop');
 
-    if (!drawer) return;
-
     function openDrawer() {
       const menuBtn = document.getElementById('rm-menu-btn');
-      drawer.style.transform = 'translateX(0)';
-      drawer.setAttribute('aria-hidden', 'false');
+      if (drawer) drawer.style.transform = 'translateX(0)';
+      if (drawer) drawer.setAttribute('aria-hidden', 'false');
       if (backdrop) backdrop.style.display = 'block';
       if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
@@ -116,14 +174,13 @@
 
     function closeDrawer() {
       const menuBtn = document.getElementById('rm-menu-btn');
-      drawer.style.transform = 'translateX(-100%)';
-      drawer.setAttribute('aria-hidden', 'true');
+      if (drawer) drawer.style.transform = 'translateX(-100%)';
+      if (drawer) drawer.setAttribute('aria-hidden', 'true');
       if (backdrop) backdrop.style.display = 'none';
       if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     }
 
-    // Delegated click listener: SVG lines / child elements tap karne par bhi trigger hota hai
     document.addEventListener('click', (e) => {
       if (e.target.closest('#rm-menu-btn')) {
         e.preventDefault();
@@ -134,55 +191,30 @@
       }
     });
 
-    // Drawer ke kisi bhi link par click hote hi drawer auto-close ho jaye
-    drawer.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A' || e.target.closest('a')) {
-        closeDrawer();
-      }
-    });
+    if (drawer) {
+      drawer.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' || e.target.closest('a')) {
+          closeDrawer();
+        }
+      });
+    }
   }
 
-  // Search Input Handler (In-Memory Trie)
-  function bindSearchEvents() {
-    const searchInput = document.getElementById('rm-global-search');
-    const popover = document.getElementById('rm-search-results');
-    if (!searchInput || !popover) return;
-
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.trim();
-      if (!query || query.length < 2) {
-        popover.hidden = true;
-        popover.innerHTML = '';
-        return;
-      }
-
-      const results = window.rmSearchEngine.search(query);
-      if (results.length === 0) {
-        popover.innerHTML = '<div style="padding:0.75rem;color:var(--rm-text-muted);">कोई परिणाम नहीं मिला</div>';
-      } else {
-        popover.innerHTML = results.map(item => `
-          <a href="${item.hash}" style="display:block;padding:0.5rem 0.75rem;text-decoration:none;color:var(--rm-text-primary);border-bottom:1px solid var(--rm-border-color);">
-            <strong>${item.nameHi}</strong> <small style="color:var(--rm-text-muted);">(${item.nameEn})</small>
-          </a>
-        `).join('');
-      }
-      popover.hidden = false;
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!searchInput.contains(e.target) && !popover.contains(e.target)) {
-        popover.hidden = true;
-      }
-    });
-  }
-
-  // DOM Boot
-  document.addEventListener('DOMContentLoaded', () => {
-    indexCategories();
+  function boot() {
+    injectDrawerDOM();
+    injectMenuButton();
     renderDrawerMenu();
     bindDrawerEvents();
-    bindSearchEvents();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  setTimeout(injectMenuButton, 300);
+  setTimeout(injectMenuButton, 1000);
 
   window.RM_CATEGORIES = RM_CATEGORIES;
 })();
