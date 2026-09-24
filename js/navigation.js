@@ -98,32 +98,45 @@
     });
   }
 
-  // Drawer Toggle Handlers
+  // Drawer Toggle Handlers (Style + Backdrop + Delegated Event)
   function bindDrawerEvents() {
-    const menuBtn = document.getElementById('rm-menu-btn');
     const drawer = document.getElementById('rm-drawer-menu');
-    const closeBtn = document.getElementById('rm-drawer-close');
     const backdrop = document.getElementById('rm-drawer-backdrop');
 
     if (!drawer) return;
 
     function openDrawer() {
+      const menuBtn = document.getElementById('rm-menu-btn');
+      drawer.style.transform = 'translateX(0)';
       drawer.setAttribute('aria-hidden', 'false');
+      if (backdrop) backdrop.style.display = 'block';
       if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeDrawer() {
+      const menuBtn = document.getElementById('rm-menu-btn');
+      drawer.style.transform = 'translateX(-100%)';
       drawer.setAttribute('aria-hidden', 'true');
+      if (backdrop) backdrop.style.display = 'none';
       if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
 
-    if (menuBtn) menuBtn.addEventListener('click', openDrawer);
-    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    // Delegated click listener: SVG lines / child elements tap karne par bhi trigger hota hai
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#rm-menu-btn')) {
+        e.preventDefault();
+        openDrawer();
+      } else if (e.target.closest('#rm-drawer-close') || e.target === backdrop) {
+        e.preventDefault();
+        closeDrawer();
+      }
+    });
 
-    // Auto-close on link click
+    // Drawer ke kisi bhi link par click hote hi drawer auto-close ho jaye
     drawer.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
         closeDrawer();
       }
     });
