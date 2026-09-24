@@ -17,35 +17,27 @@
   <link rel="stylesheet" href="/css/layout.css">
 
   <style>
-    /* Auto-Adaptive High-Contrast ☰ Menu Button */
-    .rm-menu-trigger {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 6px;
-      display: inline-flex;
+    /* Dedicated 50-Categories Navigation Strip & Tactile Press Effect */
+    .rm-nav-strip-btn {
+      width: 100%;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      line-height: 1;
-      transition: transform 0.1s ease, opacity 0.2s ease;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(0, 220, 130, 0.14) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1px solid rgba(0, 220, 130, 0.35);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease-out, opacity 0.12s ease-out, box-shadow 0.12s ease-out;
     }
-    .rm-menu-trigger:active {
-      transform: scale(0.92);
-    }
-    /* Dark theme me bold crisp white icon */
-    [data-theme="dark"] .rm-menu-trigger,
-    body.dark-mode .rm-menu-trigger {
-      color: #ffffff !important;
-    }
-    /* Light theme me solid deep dark/navy icon */
-    [data-theme="light"] .rm-menu-trigger,
-    body.light-mode .rm-menu-trigger {
-      color: #0f172a !important;
-    }
-    /* Fallback default */
-    .rm-menu-trigger {
-      color: var(--rm-text-primary, #ffffff);
+    .rm-nav-strip-btn:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
   </style>
 </head>
@@ -53,22 +45,67 @@
 
   <!-- App Header & Traffic Light Solvency Pill -->
   <header class="rm-header" style="display:flex; justify-content:space-between; align-items:center; padding:0.75rem 1rem; background:var(--rm-surface-card); border-bottom:1px solid var(--rm-border-color); position:sticky; top:0; z-index:100;">
-    <div style="display:flex; align-items:center; gap:0.5rem;">
-      <!-- Bold High-Contrast SVG 3-Lines Menu Icon -->
-      <button id="rm-menu-btn" class="rm-menu-trigger" aria-label="Open Menu" aria-expanded="false">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-      <h1 style="font-size:1.1rem; margin:0; font-weight:700; color:var(--rm-brand-primary);">राइज मित्रा (RM WORLD)</h1>
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <!-- [RM] Sovereign Brand Badge Logo (Top-Left Fixed) -->
+      <div style="background:#00dc82; color:#060d17; font-weight:800; font-size:0.95rem; border-radius:8px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,220,130,0.35); flex-shrink:0;">
+        RM
+      </div>
+      <h1 style="font-size:1.05rem; margin:0; font-weight:700; color:var(--rm-brand-primary);">राइज मित्रा (RM WORLD)</h1>
     </div>
     <div style="display:flex; align-items:center; gap:0.5rem;">
       <span id="rm-solvency-pill" class="rm-traffic-pill rm-traffic-green" aria-label="Solvency Status">सॉल्वेंसी 1.00</span>
       <span id="rm-user-badge" class="rm-badge-identity" style="font-size:0.75rem; padding:0.2rem 0.5rem; background:var(--rm-surface-secondary); border-radius:12px; font-weight:600;">USR-***489</span>
     </div>
   </header>
+
+  <!-- RISE MITRA: DEDICATED 50-CATEGORIES NAVIGATION STRIP BAR -->
+  <section class="rm-nav-strip-wrapper" style="padding:0.6rem 1rem 0.2rem 1rem;">
+    <button id="rm-menu-btn" class="rm-nav-strip-btn" type="button" aria-label="Open 50 Categories Menu" aria-expanded="false">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <!-- ☰ Custom Emerald Badge Icon -->
+        <div style="
+          background:#00dc82;
+          color:#060d17;
+          width:32px;
+          height:32px;
+          border-radius:8px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:1.2rem;
+          font-weight:900;
+          line-height:1;
+          box-shadow:0 2px 6px rgba(0,220,130,0.3);
+        ">☰</div>
+        
+        <!-- Title & Subtitle -->
+        <div style="text-align:left;">
+          <div style="font-size:0.92rem; font-weight:700; color:#ffffff; letter-spacing:0.2px;">
+            सभी 50 सेवाएं व खेल (Menu)
+          </div>
+          <div style="font-size:0.72rem; color:#00dc82; font-weight:500;">
+            33 जन-उपयोगिताएं • 17 देसी खेल
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Pill -->
+      <div style="
+        background:rgba(255,255,255,0.08);
+        border:1px solid rgba(255,255,255,0.15);
+        border-radius:20px;
+        padding:4px 12px;
+        font-size:0.74rem;
+        color:#cbd5e1;
+        display:flex;
+        align-items:center;
+        gap:4px;
+      ">
+        <span>खोलें</span>
+        <span style="color:#00dc82; font-weight:bold; font-size:0.95rem; line-height:1;">›</span>
+      </div>
+    </button>
+  </section>
 
   <!-- Bilingual Sub-50ms Search Box -->
   <section class="rm-search-section" style="padding:0.75rem 1rem; position:relative;">
