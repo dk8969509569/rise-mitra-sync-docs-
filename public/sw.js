@@ -1,11 +1,12 @@
 // Rise Mitra Sovereign PWA - Service Worker Caching Engine
 // Canonical Binding: RM-SPEC-F14-PWA-02 | File-14 Section Q
-const CACHE_NAME = 'rise-mitra-v2.0.0';
+const CACHE_NAME = 'rise-mitra-v2.1.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/api-client.js',
+  '/js/categories-data.js',
   'https://cdn.tailwindcss.com',
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80',
   'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=512&q=80'
