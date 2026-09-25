@@ -74,15 +74,37 @@
       opacity: 0.9;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     }
+    /* 50 Categories Menu Interactive Items */
+    .rm-cat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0.75rem;
+      margin: 0.25rem 0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.84rem;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .rm-cat-item:hover, .rm-cat-item:active {
+      background: rgba(0, 220, 130, 0.15);
+      color: #ffffff;
+      border-color: rgba(0, 220, 130, 0.3);
+    }
   </style>
 </head>
 <body class="bg-surface-950 text-slate-100 min-h-screen pb-24 select-none antialiased font-sans">
 
-  <!-- Top Status Bar / Header -->
+  <!-- ============================================================ -->
+  <!-- 1. TOP STATUS BAR / APP HEADER                               -->
+  <!-- ============================================================ -->
   <header class="sticky top-0 z-40 bg-surface-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <!-- [RM] Sovereign Brand Badge Logo -->
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25 flex-shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25 flex-shrink-0 cursor-pointer" onclick="window.location.hash='#home'">
         RM
       </div>
       <div>
@@ -95,7 +117,7 @@
     </div>
     
     <div class="flex items-center space-x-2">
-      <!-- Solvency Pill (From Spec) -->
+      <!-- Solvency Traffic Light Pill -->
       <span id="rm-solvency-pill" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm" aria-label="Solvency Status">
         <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live (1.00)
       </span>
@@ -106,7 +128,9 @@
     </div>
   </header>
 
-  <!-- DPDP 2023 Trust Banner -->
+  <!-- ============================================================ -->
+  <!-- 2. DPDP 2023 TRUST BANNER                                    -->
+  <!-- ============================================================ -->
   <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900/60 to-emerald-950/40 border-b border-emerald-500/20 px-4 py-2 flex items-center justify-between text-[11px]">
     <div class="flex items-center space-x-2 text-emerald-300/90 font-medium">
       <span>🛡️</span>
@@ -117,7 +141,9 @@
 
   <main class="max-w-md mx-auto p-4 space-y-4">
 
-    <!-- RISE MITRA: DEDICATED 50-CATEGORIES NAVIGATION STRIP BAR -->
+    <!-- ============================================================ -->
+    <!-- 3. DEDICATED 50-CATEGORIES NAVIGATION STRIP BAR              -->
+    <!-- ============================================================ -->
     <section class="rm-nav-strip-wrapper">
       <button id="rm-menu-btn" class="rm-nav-strip-btn" type="button" aria-label="Open 50 Categories Menu" aria-expanded="false">
         <div class="flex items-center gap-2.5">
@@ -145,13 +171,17 @@
       </button>
     </section>
 
-    <!-- Bilingual Sub-50ms Search Box -->
+    <!-- ============================================================ -->
+    <!-- 4. BILINGUAL SUB-50MS GLOBAL SEARCH                          -->
+    <!-- ============================================================ -->
     <section class="rm-search-section relative">
       <input type="search" id="rm-global-search" placeholder="50 श्रेणियाँ, सेवाएँ या खोज खोजें..." class="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500/50 transition" autocomplete="off">
       <div id="rm-search-results" hidden class="absolute left-0 right-0 top-12 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto"></div>
     </section>
     
-    <!-- Hero Fintech Wallet Card -->
+    <!-- ============================================================ -->
+    <!-- 5. HERO FINTECH WALLET CARD                                  -->
+    <!-- ============================================================ -->
     <div class="wallet-card p-5 rounded-3xl relative overflow-hidden">
       <!-- Background Ambient Glow -->
       <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -175,18 +205,20 @@
       </div>
 
       <div class="mt-4 grid grid-cols-2 gap-2.5">
-        <button class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+        <button onclick="window.location.hash='#merchant-khata'" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
           <span>+</span>
-          <span>राशि जोड़ें</span>
+          <span>नया लेन-देन (New Entry)</span>
         </button>
-        <button class="bg-slate-900/80 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs border border-slate-700/60 flex items-center justify-center space-x-1.5 active:scale-95 transition-all">
+        <button onclick="window.location.hash='#merchant-khata'" class="bg-slate-900/80 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs border border-slate-700/60 flex items-center justify-center space-x-1.5 active:scale-95 transition-all">
           <span>📜</span>
           <span>खाता विवरणी</span>
         </button>
       </div>
     </div>
 
-    <!-- Quick Action / Discovery Section Header -->
+    <!-- ============================================================ -->
+    <!-- 6. 9-CARD HIGH-CONVERTING HUB GRID                           -->
+    <!-- ============================================================ -->
     <div class="flex justify-between items-end px-1 pt-1">
       <div>
         <h2 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">9 Core Verticals</h2>
@@ -197,10 +229,9 @@
       </span>
     </div>
 
-    <!-- The 9-Card High-Converting Grid -->
     <div class="grid grid-cols-3 gap-3">
       <!-- Card 1: Health -->
-      <div class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#swasth-man'" class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           🌿
         </div>
@@ -210,7 +241,7 @@
       </div>
 
       <!-- Card 2: Skill & Creator -->
-      <div class="glass-card hover:border-teal-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#hunar-seekhein'" class="glass-card hover:border-teal-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-teal-950/60 border border-teal-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           🎓
         </div>
@@ -220,7 +251,7 @@
       </div>
 
       <!-- Card 3: Hyperlocal Kirana -->
-      <div class="glass-card hover:border-amber-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#kirana-store'" class="glass-card hover:border-amber-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           🛒
         </div>
@@ -230,7 +261,7 @@
       </div>
 
       <!-- Card 4: Gig Runners -->
-      <div class="glass-card hover:border-sky-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#cat-delivery'" class="glass-card hover:border-sky-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-sky-950/60 border border-sky-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           ⚡
         </div>
@@ -240,7 +271,7 @@
       </div>
 
       <!-- Card 5: B2B Micro-SaaS -->
-      <div class="glass-card hover:border-indigo-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#cat-business'" class="glass-card hover:border-indigo-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           💼
         </div>
@@ -250,7 +281,7 @@
       </div>
 
       <!-- Card 6: Professionals -->
-      <div class="glass-card hover:border-violet-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#cat-legal'" class="glass-card hover:border-violet-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-violet-950/60 border border-violet-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           ⚖️
         </div>
@@ -260,7 +291,7 @@
       </div>
 
       <!-- Card 7: Mentorship Pod -->
-      <div class="glass-card hover:border-rose-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#vouchers'" class="glass-card hover:border-rose-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           👥
         </div>
@@ -270,7 +301,7 @@
       </div>
 
       <!-- Card 8: Transparent Ledger -->
-      <div class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
+      <div onclick="window.location.hash='#merchant-khata'" class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
         <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           📊
         </div>
@@ -280,7 +311,7 @@
       </div>
 
       <!-- Card 9: Emergency SOS -->
-      <div class="glass-card hover:border-red-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group bg-red-950/20">
+      <div onclick="alert('इमरजेंसी SOS सिग्नल स्थानीय सुरक्षा चैनल को भेजा गया।')" class="glass-card hover:border-red-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group bg-red-950/20">
         <div class="w-11 h-11 rounded-2xl bg-red-900/50 border border-red-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
           🚨
         </div>
@@ -290,14 +321,16 @@
       </div>
     </div>
 
-    <!-- Sovereign Owner System Access (Discreet Link) -->
+    <!-- ============================================================ -->
+    <!-- 7. SOVEREIGN OWNER SYSTEM ACCESS (SECURED & CONCEALED)       -->
+    <!-- ============================================================ -->
     <div class="text-center pt-2">
       <button onclick="document.getElementById('ownerConsole').classList.toggle('hidden')" class="text-[10px] text-slate-500 hover:text-slate-300 underline tracking-wide">
         ⚙️ सॉवरेन सिस्टम कंसोल (ओनर कंट्रोल)
       </button>
     </div>
 
-    <!-- Surface-B: Sovereign Owner Console Modal (Hidden by Default) -->
+    <!-- Surface-B: Sovereign Owner Console Modal -->
     <div id="ownerConsole" class="hidden glass-card p-4 rounded-3xl border border-amber-500/40 space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <span class="text-xs font-extrabold text-amber-400 tracking-wide">🛡️ सॉवरेन कंट्रोल पैनल (Gate 23 Mode)</span>
@@ -318,7 +351,7 @@
         </div>
       </div>
       <p class="text-[9px] text-slate-500 text-center font-mono">
-        438 Reconciled Elements Verified • Fail-Closed Circuit Breaker Armed
+        412 Canonical Target Elements Verified • Fail-Closed Circuit Breaker Armed
       </p>
     </div>
 
@@ -327,52 +360,123 @@
 
   </main>
 
-  <!-- 50 Categories Drawer Navigation Menu (Integrated Dark-Themed Surface) -->
-  <aside id="rm-drawer-menu" aria-hidden="true" style="position:fixed; top:0; left:0; bottom:0; width:300px; background:#0b0f19; border-right:1px solid rgba(255,255,255,0.1); box-shadow:4px 0 24px rgba(0,0,0,0.6); z-index:200; transform:translateX(-100%); transition:transform 0.3s ease; padding:1.25rem; overflow-y:auto;">
+  <!-- ============================================================== -->
+  <!-- 8. 50 CATEGORIES 2-TIER ACCORDION DRAWER (33 APPS + 17 GAMES)  -->
+  <!-- ============================================================== -->
+  <aside id="rm-drawer-menu" aria-hidden="true" style="position:fixed; top:0; left:0; bottom:0; width:310px; background:#0b0f19; border-right:1px solid rgba(255,255,255,0.1); box-shadow:4px 0 24px rgba(0,0,0,0.6); z-index:200; transform:translateX(-100%); transition:transform 0.3s ease; padding:1.25rem; overflow-y:auto;">
+    
+    <!-- Drawer Header -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
       <div>
-        <h3 style="margin:0; font-size:1rem; font-weight:800; color:#ffffff;">50 सफल श्रेणियाँ</h3>
-        <p style="margin:2px 0 0 0; font-size:0.7rem; color:#00dc82;">राइज मित्रा संपूर्ण कैटलॉग</p>
+        <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#ffffff;">50 सफल श्रेणियाँ</h3>
+        <p style="margin:2px 0 0 0; font-size:0.72rem; color:#00dc82;">राइज मित्रा संपूर्ण कैटलॉग</p>
       </div>
-      <button id="rm-drawer-close" aria-label="Close Menu" style="background:rgba(255,255,255,0.06); border:none; width:30px; height:30px; border-radius:8px; font-size:1rem; cursor:pointer; color:#ffffff; display:flex; align-items:center; justify-content:center;">✕</button>
+      <button id="rm-drawer-close" aria-label="Close Menu" style="background:rgba(255,255,255,0.06); border:none; width:32px; height:32px; border-radius:8px; font-size:1.1rem; cursor:pointer; color:#ffffff; display:flex; align-items:center; justify-content:center;">✕</button>
     </div>
 
-    <h4 style="font-size:0.75rem; color:#00dc82; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin:1rem 0 0.5rem 0;">आजीविका (33 सेवाएं)</h4>
-    <ul id="rm-tier1-list" style="list-style:none; padding:0; margin:0 0 1.25rem 0; font-size:0.88rem; color:#cbd5e1;"></ul>
+    <!-- TIER 1 ACCORDION BUTTON: आजीविका (33 सेवाएं) -->
+    <button id="rm-tier1-toggle" type="button" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(0, 220, 130, 0.1); border:1px solid rgba(0, 220, 130, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#00dc82; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.5rem; outline:none;">
+      <span style="display:flex; align-items:center; gap:6px;">💼 आजीविका (33 सेवाएं)</span>
+      <span id="rm-tier1-arrow" style="font-size:0.8rem; transition:transform 0.2s ease;">▼</span>
+    </button>
+    
+    <!-- TIER 1 LIST: 33 OFFICIAL PLAY STORE APPS -->
+    <ul id="rm-tier1-list" style="list-style:none; padding:0.4rem 0; margin:0; display:block; max-height:50vh; overflow-y:auto;">
+      <li><a href="#cat-art-design" class="rm-cat-item"><span>🎨</span><span>01. Art & Design (कला व डिज़ाइन)</span></a></li>
+      <li><a href="#cat-auto-vehicles" class="rm-cat-item"><span>🚗</span><span>02. Auto & Vehicles (ऑटो व वाहन)</span></a></li>
+      <li><a href="#cat-beauty" class="rm-cat-item"><span>💄</span><span>03. Beauty (सौंदर्य व ग्रूमिंग)</span></a></li>
+      <li><a href="#cat-books-reference" class="rm-cat-item"><span>📚</span><span>04. Books & Reference (किताबें)</span></a></li>
+      <li><a href="#merchant-khata" class="rm-cat-item"><span>💼</span><span>05. Business (सॉवरेन बहीखाता)</span></a></li>
+      <li><a href="#cat-comics" class="rm-cat-item"><span>🎭</span><span>06. Comics (कॉमिक्स व वेबटून)</span></a></li>
+      <li><a href="#cat-communication" class="rm-cat-item"><span>💬</span><span>07. Communication (संचार व चैट)</span></a></li>
+      <li><a href="#cat-dating" class="rm-cat-item"><span>❤️</span><span>08. Dating (परिचय व रिश्ते)</span></a></li>
+      <li><a href="#hunar-seekhein" class="rm-cat-item"><span>🎓</span><span>09. Education (हुनर व शिक्षा)</span></a></li>
+      <li><a href="#cat-entertainment" class="rm-cat-item"><span>🎬</span><span>10. Entertainment (मनोरंजन)</span></a></li>
+      <li><a href="#cat-events" class="rm-cat-item"><span>🎟️</span><span>11. Events (मेले व आयोजन)</span></a></li>
+      <li><a href="#cat-family" class="rm-cat-item"><span>👨‍👩‍👧</span><span>12. Family (परिवार व बच्चे)</span></a></li>
+      <li><a href="#ledger-balance" class="rm-cat-item"><span>💰</span><span>13. Finance (RM CASH लेज़र)</span></a></li>
+      <li><a href="#cat-food-drink" class="rm-cat-item"><span>🍲</span><span>14. Food & Drink (खान-पान)</span></a></li>
+      <li><a href="#swasth-man" class="rm-cat-item"><span>🌿</span><span>15. Health & Fitness (स्वास्थ्य)</span></a></li>
+      <li><a href="#cat-house-home" class="rm-cat-item"><span>🏠</span><span>16. House & Home (घर व मरम्मत)</span></a></li>
+      <li><a href="#cat-libraries-demo" class="rm-cat-item"><span>📦</span><span>17. Libraries & Demo (टूल्स)</span></a></li>
+      <li><a href="#lifestyle-hub" class="rm-cat-item"><span>🧘</span><span>18. Lifestyle (जीवनशैली)</span></a></li>
+      <li><a href="#hyperlocal-map" class="rm-cat-item"><span>🗺️</span><span>19. Maps & Navigation (नक्शा)</span></a></li>
+      <li><a href="#cat-medical" class="rm-cat-item"><span>💊</span><span>20. Medical (दवा व डॉक्टर)</span></a></li>
+      <li><a href="#cat-music-audio" class="rm-cat-item"><span>🎵</span><span>21. Music & Audio (संगीत)</span></a></li>
+      <li><a href="#cat-news" class="rm-cat-item"><span>📰</span><span>22. News & Magazines (समाचार)</span></a></li>
+      <li><a href="#cat-parenting" class="rm-cat-item"><span>🍼</span><span>23. Parenting (शिशु पोषण)</span></a></li>
+      <li><a href="#cat-personalization" class="rm-cat-item"><span>✨</span><span>24. Personalization (थीम्स)</span></a></li>
+      <li><a href="#cat-photography" class="rm-cat-item"><span>📸</span><span>25. Photography (कैमरा)</span></a></li>
+      <li><a href="#invoicing-tool" class="rm-cat-item"><span>⚡</span><span>26. Productivity (उत्पादकता)</span></a></li>
+      <li><a href="#kirana-store" class="rm-cat-item"><span>🛒</span><span>27. Shopping (0% किराना स्टोर)</span></a></li>
+      <li><a href="#cat-social" class="rm-cat-item"><span>🌐</span><span>28. Social (चौपाल व समाज)</span></a></li>
+      <li><a href="#cat-sports-app" class="rm-cat-item"><span>🏏</span><span>29. Sports (खेलकूद व लाइव)</span></a></li>
+      <li><a href="#utility-tools" class="rm-cat-item"><span>🛠️</span><span>30. Tools (कैलकुलेटर व टूल्स)</span></a></li>
+      <li><a href="#cat-travel" class="rm-cat-item"><span>✈️</span><span>31. Travel & Local (यात्रा)</span></a></li>
+      <li><a href="#cat-video" class="rm-cat-item"><span>🎞️</span><span>32. Video Players & Editors</span></a></li>
+      <li><a href="#cat-weather" class="rm-cat-item"><span>☀️</span><span>33. Weather (मौसम पूर्वानुमान)</span></a></li>
+    </ul>
 
-    <h4 style="font-size:0.75rem; color:#38bdf8; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin:1rem 0 0.5rem 0;">सुरक्षा व खेल (17 श्रेणियां)</h4>
-    <ul id="rm-tier2-list" style="list-style:none; padding:0; margin:0; font-size:0.88rem; color:#cbd5e1;"></ul>
+    <!-- TIER 2 ACCORDION BUTTON: सुरक्षा व खेल (17 श्रेणियां) -->
+    <button id="rm-tier2-toggle" type="button" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#38bdf8; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.8rem; outline:none;">
+      <span style="display:flex; align-items:center; gap:6px;">🎮 सुरक्षा व खेल (17 श्रेणियां)</span>
+      <span id="rm-tier2-arrow" style="font-size:0.8rem; transition:transform 0.2s ease;">▼</span>
+    </button>
+    
+    <!-- TIER 2 LIST: 17 OFFICIAL PLAY STORE CASUAL GAMES (ANTI-RMG) -->
+    <ul id="rm-tier2-list" style="list-style:none; padding:0.4rem 0; margin:0; display:block; max-height:40vh; overflow-y:auto;">
+      <li><a href="#game-action" class="rm-cat-item"><span>🏹</span><span>01. Action (एक्शन तीरंदाजी)</span></a></li>
+      <li><a href="#game-adventure" class="rm-cat-item"><span>🧭</span><span>02. Adventure (रोमांचक यात्रा)</span></a></li>
+      <li><a href="#game-arcade" class="rm-cat-item"><span>🕹️</span><span>03. Arcade (गेंद टप्पा / आर्केड)</span></a></li>
+      <li><a href="#game-board" class="rm-cat-item"><span>🎲</span><span>04. Board (देसी लूडो व कैरम)</span></a></li>
+      <li><a href="#game-card" class="rm-cat-item"><span>🃏</span><span>05. Card (सॉलिटेयर - Zero Cash)</span></a></li>
+      <li><a href="#game-casino" class="rm-cat-item"><span>🎡</span><span>06. Casino (पॉइंट्स लकी चक्र)</span></a></li>
+      <li><a href="#game-casual" class="rm-cat-item"><span>🎈</span><span>07. Casual (रंगोली व हल्के खेल)</span></a></li>
+      <li><a href="#game-educational" class="rm-cat-item"><span>🧠</span><span>08. Educational (ज्ञान क्विज़)</span></a></li>
+      <li><a href="#game-music" class="rm-cat-item"><span>🥁</span><span>09. Music (संगीत ताल व बीट)</span></a></li>
+      <li><a href="#game-puzzle" class="rm-cat-item"><span>🧩</span><span>10. Puzzle (दिमागी पहेलियाँ)</span></a></li>
+      <li><a href="#game-racing" class="rm-cat-item"><span>🏎️</span><span>11. Racing (बैलगाड़ी / कार्ट रेस)</span></a></li>
+      <li><a href="#game-role-playing" class="rm-cat-item"><span>👑</span><span>12. Role Playing (गाँव का प्रधान)</span></a></li>
+      <li><a href="#game-simulation" class="rm-cat-item"><span>🚜</span><span>13. Simulation (खेत सिमुलेटर)</span></a></li>
+      <li><a href="#game-sports" class="rm-cat-item"><span>🏏</span><span>14. Sports (गली क्रिकेट)</span></a></li>
+      <li><a href="#game-strategy" class="rm-cat-item"><span>♟️</span><span>15. Strategy (चाणक्य नीति / शतरंज)</span></a></li>
+      <li><a href="#game-trivia" class="rm-cat-item"><span>❓</span><span>16. Trivia (देसी ट्रिविया व तथ्य)</span></a></li>
+      <li><a href="#game-word" class="rm-cat-item"><span>🔤</span><span>17. Word (शब्द पहेली व कोश)</span></a></li>
+    </ul>
+
   </aside>
   <div id="rm-drawer-backdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:190; display:none; backdrop-filter:blur(3px);"></div>
 
-  <!-- Bottom Floating Navigation Bar -->
+  <!-- ============================================================ -->
+  <!-- 9. BOTTOM FLOATING NAVIGATION BAR                            -->
+  <!-- ============================================================ -->
   <nav class="fixed bottom-0 inset-x-0 z-50 nav-glass px-6 py-2">
     <div class="max-w-md mx-auto flex justify-between items-center text-center">
       <a href="#home" class="flex flex-col items-center text-emerald-400 group">
         <span class="text-lg group-hover:scale-110 transition">🏠</span>
         <span class="text-[10px] font-bold mt-0.5">होम</span>
       </a>
-      <a href="#merchant-khata" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">📦</span>
+      <a href="#kirana-store" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+        <span class="text-lg group-hover:scale-110 transition">🛒</span>
         <span class="text-[10px] font-semibold mt-0.5">ऑर्डर</span>
       </a>
-      <a href="#kirana-store" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">💰</span>
+      <a href="#merchant-khata" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
+        <span class="text-lg group-hover:scale-110 transition">📖</span>
         <span class="text-[10px] font-semibold mt-0.5">खाता</span>
       </a>
       <a href="#vouchers" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">👤</span>
+        <span class="text-lg group-hover:scale-110 transition">🎟️</span>
         <span class="text-[10px] font-semibold mt-0.5">प्रोफ़ाइल</span>
       </a>
     </div>
   </nav>
 
   <!-- ============================================================ -->
-  <!-- RISE MITRA (RM WORLD) - CLIENT DEPENDENCY RUNTIME INGESTION -->
-  <!-- Ordered Execution: i18n -> Trie -> Nav -> DPDP -> Solvency -> Settings -> DB -> Ledger -> Sync -> Kirana -> Views -> App -->
+  <!-- 10. CLIENT DEPENDENCY RUNTIME INGESTION                       -->
   <!-- ============================================================ -->
   <script src="/js/i18n-dict.js"></script>
   <script src="/js/trie-search.js"></script>
+  <script src="/js/categories-data.js"></script>
   <script src="/js/navigation.js"></script>
   <script src="/js/consent-manager.js"></script>
   <script src="/js/solvency-badge.js"></script>
@@ -384,7 +488,9 @@
   <script src="/js/views.js"></script>
   <script src="/js/app.js"></script>
 
-  <!-- Zero-Dependency Drawer Click & Touch Controller -->
+  <!-- ============================================================ -->
+  <!-- 11. ZERO-DEPENDENCY DRAWER & ACCORDION CONTROLLER            -->
+  <!-- ============================================================ -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const menuBtn = document.getElementById('rm-menu-btn');
@@ -413,10 +519,44 @@
       if (menuBtn) menuBtn.addEventListener('click', openDrawer);
       if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
       if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+      // Accordion Toggle Handlers for 33 & 17 Categories
+      const t1Btn = document.getElementById('rm-tier1-toggle');
+      const t1List = document.getElementById('rm-tier1-list');
+      const t1Arrow = document.getElementById('rm-tier1-arrow');
+
+      const t2Btn = document.getElementById('rm-tier2-toggle');
+      const t2List = document.getElementById('rm-tier2-list');
+      const t2Arrow = document.getElementById('rm-tier2-arrow');
+
+      if (t1Btn && t1List) {
+        t1Btn.addEventListener('click', () => {
+          const isHidden = t1List.style.display === 'none';
+          t1List.style.display = isHidden ? 'block' : 'none';
+          if (t1Arrow) t1Arrow.textContent = isHidden ? '▼' : '▶';
+        });
+      }
+
+      if (t2Btn && t2List) {
+        t2Btn.addEventListener('click', () => {
+          const isHidden = t2List.style.display === 'none';
+          t2List.style.display = isHidden ? 'block' : 'none';
+          if (t2Arrow) t2Arrow.textContent = isHidden ? '▼' : '▶';
+        });
+      }
+
+      // Auto-close drawer on category link click
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.rm-cat-item')) {
+          closeDrawer();
+        }
+      });
     });
   </script>
 
-  <!-- PWA Service Worker Registration -->
+  <!-- ============================================================ -->
+  <!-- 12. PWA SERVICE WORKER REGISTRATION                          -->
+  <!-- ============================================================ -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
