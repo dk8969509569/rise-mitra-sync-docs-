@@ -1,0 +1,29 @@
+# Rise Mitra Canonical Robots Policy (AEO & Web Crawlers)
+# Whitelist AI Discovery & Answer Engines
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+
+# General Crawlers & Security Barriers
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/*
+Disallow: /api/v1/internal/*
+Disallow: /checkout/private/*
+
+# Discovery References
+Sitemap: https://risemitra.com/sitemap.xml
+# LLMs Reference: https://risemitra.com/llms.txt
