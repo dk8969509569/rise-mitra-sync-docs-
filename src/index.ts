@@ -7,12 +7,20 @@
  * @zero-loss-rule Sovereign Runtime Lifecycle, 11-Service Wiring & Fail-Closed Shutdown
  */
 
+import path from "path";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import pino from "pino";
+import fastifyHelmet from "@fastify/helmet";
+import fastifySensible from "@fastify/sensible";
+import fastifyStatic from "@fastify/static";
+
 import { createFastifyServer } from "./server";
 import { prisma } from "./database/prisma.client";
 import { RedisService } from "./cache/redis.client";
 import { CanonicalErrorFactory, CanonicalIdGenerator } from "./core/contracts";
+
+// AEO & Discovery Routes (Phase 2.2 / Phase 2.3)
+import { llmsRoutes } from "./routes/llms";
 
 // Middlewares (2)
 import { RateLimitMiddleware } from "./middleware/rate-limit.middleware";
@@ -55,6 +63,20 @@ export const bootstrap = async (): Promise<FastifyInstance> => {
 
   // 3. Instantiate Base Fastify Kernel Instance
   const app = createFastifyServer();
+
+  // 3.1 Mount Enterprise Security & Static Asset Plugins (Phase 1.1 / Phase 2.3)
+  await app.register(fastifyHelmet, {
+    contentSecurityPolicy: false,
+  });
+  await app.register(fastifySensible);
+  await app.register(fastifyStatic, {
+    root: path.join(__dirname, "../public"),
+    prefix: "/",
+    index: false,
+  });
+
+  // 3.2 Mount AEO & Answer Engine Discovery Endpoint (/llms.txt)
+  await app.register(llmsRoutes);
 
   // 4. Instantiate All 9 Core Domain Services
   const killSwitchService = new KillSwitchService(prisma);
