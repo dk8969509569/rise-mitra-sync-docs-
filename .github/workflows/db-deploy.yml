@@ -1,0 +1,29 @@
+name: Deploy Database Schema to Neon
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'prisma/schema.prisma'
+      - '.github/workflows/db-deploy.yml'
+
+jobs:
+  migrate:
+    name: Prisma DB Push to Neon
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Push Schema to Neon PostgreSQL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma db push
