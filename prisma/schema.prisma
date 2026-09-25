@@ -411,4 +411,19 @@ model D08_HyperlocalOrder {
   @@index([status])
   @@map("d08_hyperlocal_orders")
 }
+// Phase 1.2: System Audit Incident Entity
+model SystemAuditIncident {
+  id             String    @id @default(cuid())
+  traceId        String    @map("trace_id")
+  subsystem      String
+  severity       String    // YELLOW | RED
+  errorSignature String    @map("error_signature")
+  cause          String?
+  resolvedAt     DateTime? @map("resolved_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@index([severity])
+  @@index([createdAt])
+  @@map("system_audit_incidents")
+}
 
