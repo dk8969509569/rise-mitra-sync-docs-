@@ -19,8 +19,9 @@ import { prisma } from "./database/prisma.client";
 import { RedisService } from "./cache/redis.client";
 import { CanonicalErrorFactory, CanonicalIdGenerator } from "./core/contracts";
 
-// AEO & Discovery Routes (Phase 2.2 / Phase 2.3)
+// AEO, Discovery & Health Telemetry Routes (Phase 2 & Phase 3)
 import { llmsRoutes } from "./routes/llms";
+import { healthRoutes } from "./routes/health";
 
 // Middlewares (2)
 import { RateLimitMiddleware } from "./middleware/rate-limit.middleware";
@@ -77,6 +78,9 @@ export const bootstrap = async (): Promise<FastifyInstance> => {
 
   // 3.2 Mount AEO & Answer Engine Discovery Endpoint (/llms.txt)
   await app.register(llmsRoutes);
+
+  // 3.3 Mount 1:1 Health & Diagnostic Telemetry Endpoints (/health and /health/system)
+  await app.register(healthRoutes);
 
   // 4. Instantiate All 9 Core Domain Services
   const killSwitchService = new KillSwitchService(prisma);
