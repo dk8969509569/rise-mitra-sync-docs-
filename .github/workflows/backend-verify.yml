@@ -1,0 +1,59 @@
+name: Verify Backend Cloud Infrastructure
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/backend-verify.yml'
+
+jobs:
+  verify-infrastructure:
+    name: Neon & Redis Live Handshake Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Verify Neon PostgreSQL Handshake
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          npx prisma db push --skip-generate
+          node -e "
+            const { PrismaClient } = require('@prisma/client');
+            const prisma = new PrismaClient();
+            async function main() {
+              await prisma.\$connect();
+              console.log('🟢 Neon PostgreSQL: Connected Successfully (ap-southeast-1)');
+              await prisma.\$disconnect();
+            }
+            main().catch(err => { console.error('🔴 DB Error:', err); process.exit(1); });
+          "
+
+      - name: Verify Upstash Redis Handshake
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+        run: |
+          node -e "
+            const Redis = require('ioredis');
+            const redis = new Redis(process.env.REDIS_URL);
+            async function main() {
+              await redis.set('rise_healthcheck', 'OK', 'EX', 60);
+              const val = await redis.get('rise_healthcheck');
+              if (val === 'OK') {
+                console.log('🟢 Upstash Redis: In-Memory Read/Write Confirmed (<5ms latency)');
+                process.exit(0);
+              } else {
+                throw new Error('Key mismatch');
+              }
+            }
+            main().catch(err => { console.error('🔴 Redis Error:', err); process.exit(1); });
+          "
