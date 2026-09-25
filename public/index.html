@@ -52,7 +52,6 @@
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
-    /* Dedicated 50-Categories Navigation Strip Tactile Press Effect */
     .rm-nav-strip-btn {
       width: 100%;
       display: flex;
@@ -66,46 +65,35 @@
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
       outline: none;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 0.12s ease-out, opacity 0.12s ease-out, box-shadow 0.12s ease-out;
+      transition: transform 0.12s ease-out;
     }
-    .rm-nav-strip-btn:active {
-      transform: scale(0.97);
-      opacity: 0.9;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-    }
-    /* Drawer Category Accordion Items */
-    .rm-menu-item, .rm-cat-item {
+    .rm-nav-strip-btn:active { transform: scale(0.97); }
+    .rm-menu-item {
       display: flex;
       align-items: center;
       gap: 0.65rem;
       padding: 0.6rem 0.8rem;
       margin-bottom: 5px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: #cbd5e1;
       text-decoration: none;
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      transition: background 0.15s ease, color 0.15s ease;
     }
-    .rm-menu-item:hover, .rm-menu-item:active,
-    .rm-cat-item:hover, .rm-cat-item:active {
+    .rm-menu-item:hover, .rm-menu-item:active {
       background: rgba(0, 220, 130, 0.16);
       color: #ffffff;
       border-color: rgba(0, 220, 130, 0.35);
-      transform: scale(0.98);
     }
   </style>
 </head>
 <body class="bg-surface-950 text-slate-100 min-h-screen pb-24 select-none antialiased font-sans">
 
-  <!-- ============================================================ -->
-  <!-- 1. TOP STATUS BAR / HEADER                                   -->
-  <!-- ============================================================ -->
+  <!-- 1. TOP STATUS BAR / HEADER -->
   <header class="sticky top-0 z-40 bg-surface-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <!-- [RM] Sovereign Brand Badge Logo -->
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center font-extrabold text-slate-950 text-base shadow-lg shadow-emerald-500/25 flex-shrink-0 cursor-pointer" onclick="window.location.hash='#home'">
         RM
       </div>
@@ -119,20 +107,16 @@
     </div>
     
     <div class="flex items-center space-x-2">
-      <!-- Solvency Traffic Light Pill -->
-      <span id="rm-solvency-pill" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm" aria-label="Solvency Status">
+      <span id="rm-solvency-pill" class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 shadow-sm">
         <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live (1.00)
       </span>
-      <!-- DPDP Masked ID -->
       <span id="rm-user-badge" class="text-[11px] font-mono font-medium bg-slate-900 border border-slate-800 px-2 py-1 rounded-lg text-slate-300">
         USR-***489
       </span>
     </div>
   </header>
 
-  <!-- ============================================================ -->
-  <!-- 2. DPDP 2023 TRUST BANNER                                    -->
-  <!-- ============================================================ -->
+  <!-- 2. DPDP TRUST BANNER -->
   <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900/60 to-emerald-950/40 border-b border-emerald-500/20 px-4 py-2 flex items-center justify-between text-[11px]">
     <div class="flex items-center space-x-2 text-emerald-300/90 font-medium">
       <span>🛡️</span>
@@ -143,29 +127,18 @@
 
   <main class="max-w-md mx-auto p-4 space-y-4">
 
-    <!-- ============================================================ -->
-    <!-- 3. DEDICATED 50-CATEGORIES NAVIGATION STRIP BAR              -->
-    <!-- ============================================================ -->
+    <!-- 3. 50 CATEGORIES NAVIGATION BAR -->
     <section class="rm-nav-strip-wrapper">
-      <button id="rm-menu-btn" class="rm-nav-strip-btn" type="button" aria-label="Open 50 Categories Menu" aria-expanded="false">
+      <button id="rm-menu-btn" class="rm-nav-strip-btn" type="button" aria-label="Open 50 Categories Menu">
         <div class="flex items-center gap-2.5">
-          <!-- ☰ Emerald Badge Icon -->
-          <div style="background:#00dc82; color:#060d17; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:900; line-height:1; box-shadow:0 2px 6px rgba(0,220,130,0.3);">
+          <div style="background:#00dc82; color:#060d17; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:900;">
             ☰
           </div>
-          
-          <!-- Title & Subtitle -->
           <div class="text-left">
-            <div class="text-[14px] font-bold text-white tracking-wide">
-              सभी 50 सेवाएं व खेल (Menu)
-            </div>
-            <div class="text-[11px] text-emerald-400 font-medium">
-              33 जन-उपयोगिताएं • 17 देसी खेल
-            </div>
+            <div class="text-[14px] font-bold text-white tracking-wide">सभी 50 सेवाएं व खेल (Menu)</div>
+            <div class="text-[11px] text-emerald-400 font-medium">33 जन-उपयोगिताएं • 17 देसी खेल</div>
           </div>
         </div>
-
-        <!-- Action Pill -->
         <div class="bg-white/10 border border-white/15 rounded-full px-3 py-1 text-[11px] text-slate-300 flex items-center gap-1">
           <span>खोलें</span>
           <span class="text-emerald-400 font-bold text-sm leading-none">›</span>
@@ -173,21 +146,15 @@
       </button>
     </section>
 
-    <!-- ============================================================ -->
-    <!-- 4. BILINGUAL SUB-50MS GLOBAL SEARCH                          -->
-    <!-- ============================================================ -->
+    <!-- 4. GLOBAL SEARCH -->
     <section class="rm-search-section relative">
-      <input type="search" id="rm-global-search" placeholder="50 श्रेणियाँ, सेवाएँ या खोज खोजें..." class="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500/50 transition" autocomplete="off">
+      <input type="search" id="rm-global-search" placeholder="50 श्रेणियाँ, सेवाएँ या खोज खोजें..." class="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500/50" autocomplete="off">
       <div id="rm-search-results" hidden class="absolute left-0 right-0 top-12 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto"></div>
     </section>
     
-    <!-- ============================================================ -->
-    <!-- 5. HERO FINTECH WALLET CARD                                  -->
-    <!-- ============================================================ -->
+    <!-- 5. WALLET CARD -->
     <div class="wallet-card p-5 rounded-3xl relative overflow-hidden">
-      <!-- Background Ambient Glow -->
       <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
-      
       <div class="flex justify-between items-start mb-3">
         <div>
           <span class="text-[11px] font-semibold uppercase tracking-wider text-emerald-200/80">उपलब्ध शेष राशि (RM Cash)</span>
@@ -196,31 +163,27 @@
             <span class="text-[11px] text-emerald-400 font-mono font-medium">● 100% सॉल्वेंट</span>
           </div>
         </div>
-        <span class="text-[10px] bg-emerald-950/80 text-emerald-300 font-bold border border-emerald-500/40 px-2.5 py-1 rounded-full shadow-inner">
+        <span class="text-[10px] bg-emerald-950/80 text-emerald-300 font-bold border border-emerald-500/40 px-2.5 py-1 rounded-full">
           28% NCR Cap
         </span>
       </div>
-
       <div class="flex justify-between items-center text-[10px] text-emerald-200/60 font-mono border-t border-emerald-500/20 pt-2.5 mt-2">
         <span>CoverageRatio: 1.00</span>
         <span>डबल-एंट्री लेजर: सुरक्षित</span>
       </div>
-
       <div class="mt-4 grid grid-cols-2 gap-2.5">
-        <button onclick="window.location.hash='#merchant-khata'" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+        <button onclick="window.location.hash='#merchant-khata'" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-lg active:scale-95">
           <span>+</span>
           <span>नया लेन-देन (New Entry)</span>
         </button>
-        <button onclick="window.location.hash='#merchant-khata'" class="bg-slate-900/80 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-xl text-xs border border-slate-700/60 flex items-center justify-center space-x-1.5 active:scale-95 transition-all">
+        <button onclick="window.location.hash='#merchant-khata'" class="bg-slate-900/80 text-white font-semibold py-2.5 px-4 rounded-xl text-xs border border-slate-700/60 flex items-center justify-center space-x-1.5 active:scale-95">
           <span>📜</span>
           <span>खाता विवरणी</span>
         </button>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- 6. 9-CARD HIGH-CONVERTING HUB GRID                           -->
-    <!-- ============================================================ -->
+    <!-- 6. 9 CORE VERTICALS -->
     <div class="flex justify-between items-end px-1 pt-1">
       <div>
         <h2 class="text-xs font-extrabold uppercase tracking-widest text-slate-400">9 Core Verticals</h2>
@@ -232,107 +195,60 @@
     </div>
 
     <div class="grid grid-cols-3 gap-3">
-      <!-- Card 1: Health -->
-      <div onclick="window.location.hash='#swasth-man'" class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          🌿
-        </div>
+      <div onclick="window.location.hash='#swasth-man'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl">🌿</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">स्वस्थ मन</span>
         <span class="text-[9px] text-slate-400 mt-0.5">वेलनेस गाइड</span>
-        <span class="mt-1 text-[8px] font-bold text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">सुरक्षित</span>
       </div>
-
-      <!-- Card 2: Skill & Creator -->
-      <div onclick="window.location.hash='#hunar-seekhein'" class="glass-card hover:border-teal-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-teal-950/60 border border-teal-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          🎓
-        </div>
+      <div onclick="window.location.hash='#hunar-seekhein'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-teal-950/60 border border-teal-500/30 flex items-center justify-center text-2xl">🎓</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">हुनर सीखें</span>
         <span class="text-[9px] text-slate-400 mt-0.5">डिजिटल वर्कशॉप</span>
-        <span class="mt-1 text-[8px] font-bold text-teal-300 bg-teal-950/80 px-1.5 py-0.5 rounded border border-teal-500/30">70% शेयर</span>
       </div>
-
-      <!-- Card 3: Hyperlocal Kirana -->
-      <div onclick="window.location.hash='#kirana-store'" class="glass-card hover:border-amber-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          🛒
-        </div>
+      <div onclick="window.location.hash='#kirana-store'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-2xl">🛒</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">किराना स्टोर</span>
         <span class="text-[9px] text-slate-400 mt-0.5">लोकल ऑर्डर</span>
-        <span class="mt-1 text-[8px] font-bold text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-500/30">0% फ़ीस</span>
       </div>
-
-      <!-- Card 4: Gig Runners -->
-      <div onclick="window.location.hash='#cat-delivery'" class="glass-card hover:border-sky-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-sky-950/60 border border-sky-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          ⚡
-        </div>
+      <div onclick="window.location.hash='#cat-delivery'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-sky-950/60 border border-sky-500/30 flex items-center justify-center text-2xl">⚡</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">रनर डिलीवरी</span>
         <span class="text-[9px] text-slate-400 mt-0.5">हाइपरलोकल गिग</span>
-        <span class="mt-1 text-[8px] font-bold text-sky-300 bg-sky-950/80 px-1.5 py-0.5 rounded border border-sky-500/30">₹25-50 पास</span>
       </div>
-
-      <!-- Card 5: B2B Micro-SaaS -->
-      <div onclick="window.location.hash='#cat-business'" class="glass-card hover:border-indigo-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          💼
-        </div>
+      <div onclick="window.location.hash='#cat-business'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-2xl">💼</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">B2B SaaS</span>
         <span class="text-[9px] text-slate-400 mt-0.5">ऑटोमेशन किट</span>
-        <span class="mt-1 text-[8px] font-bold text-indigo-300 bg-indigo-950/80 px-1.5 py-0.5 rounded border border-indigo-500/30">आवर्ती आय</span>
       </div>
-
-      <!-- Card 6: Professionals -->
-      <div onclick="window.location.hash='#cat-legal'" class="glass-card hover:border-violet-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-violet-950/60 border border-violet-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          ⚖️
-        </div>
+      <div onclick="window.location.hash='#cat-legal'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-violet-950/60 border border-violet-500/30 flex items-center justify-center text-2xl">⚖️</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">विशेषज्ञ सेवा</span>
         <span class="text-[9px] text-slate-400 mt-0.5">CA व विधिक सलाह</span>
-        <span class="mt-1 text-[8px] font-bold text-violet-300 bg-violet-950/80 px-1.5 py-0.5 rounded border border-violet-500/30">सत्यापित</span>
       </div>
-
-      <!-- Card 7: Mentorship Pod -->
-      <div onclick="window.location.hash='#vouchers'" class="glass-card hover:border-rose-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          👥
-        </div>
+      <div onclick="window.location.hash='#vouchers'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-2xl">👥</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">मेंटर पॉड</span>
         <span class="text-[9px] text-slate-400 mt-0.5">टीम गाइडेंस</span>
-        <span class="mt-1 text-[8px] font-bold text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-500/30">70:30 Pod</span>
       </div>
-
-      <!-- Card 8: Transparent Ledger -->
-      <div onclick="window.location.hash='#merchant-khata'" class="glass-card hover:border-emerald-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group">
-        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          📊
-        </div>
+      <div onclick="window.location.hash='#merchant-khata'" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95">
+        <div class="w-11 h-11 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-2xl">📊</div>
         <span class="text-xs font-bold text-white mt-2 leading-tight">पारदर्शी लेजर</span>
         <span class="text-[9px] text-slate-400 mt-0.5">रियल-टाइम पास</span>
-        <span class="mt-1 text-[8px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">डबल-एंट्री</span>
       </div>
-
-      <!-- Card 9: Emergency SOS -->
-      <div onclick="alert('इमरजेंसी SOS सिग्नल स्थानीय सुरक्षा चैनल को भेजा गया।')" class="glass-card hover:border-red-500/50 p-3 rounded-2xl flex flex-col items-center text-center transition cursor-pointer active:scale-95 group bg-red-950/20">
-        <div class="w-11 h-11 rounded-2xl bg-red-900/50 border border-red-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
-          🚨
-        </div>
+      <div onclick="alert('इमरजेंसी SOS सिग्नल भेजा गया।')" class="glass-card p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95 bg-red-950/20">
+        <div class="w-11 h-11 rounded-2xl bg-red-900/50 border border-red-500/40 flex items-center justify-center text-2xl">🚨</div>
         <span class="text-xs font-bold text-red-400 mt-2 leading-tight">इमरजेंसी SOS</span>
         <span class="text-[9px] text-slate-400 mt-0.5">तुरंत सहायता</span>
-        <span class="mt-1 text-[8px] font-bold text-red-400 bg-red-950 px-1.5 py-0.5 rounded border border-red-800">1-टैप</span>
       </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- 7. SOVEREIGN OWNER SYSTEM ACCESS (CONCEALED MODAL)          -->
-    <!-- ============================================================ -->
+    <!-- 7. OWNER CONSOLE (CONCEALED) -->
     <div class="text-center pt-2">
       <button onclick="document.getElementById('ownerConsole').classList.toggle('hidden')" class="text-[10px] text-slate-500 hover:text-slate-300 underline tracking-wide">
         ⚙️ सॉवरेन सिस्टम कंसोल (ओनर कंट्रोल)
       </button>
     </div>
 
-    <!-- Surface-B: Sovereign Owner Console Modal -->
     <div id="ownerConsole" class="hidden glass-card p-4 rounded-3xl border border-amber-500/40 space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <span class="text-xs font-extrabold text-amber-400 tracking-wide">🛡️ सॉवरेन कंट्रोल पैनल (Gate 23 Mode)</span>
@@ -357,148 +273,164 @@
       </p>
     </div>
 
-    <!-- Dynamic Views Container -->
     <div id="rm-view-container" class="hidden"></div>
-
-    <!-- Canonical ZEL Footer -->
-    <footer class="mt-8 text-center text-[11px] text-slate-500 pb-4">
-      <p>राइज मित्रा • 412 Canonical Target Elements Verified</p>
-      <p class="text-[10px] text-slate-600 mt-0.5">DPDP Act 2023 & Direct Selling Rules 2021 Compliant</p>
-    </footer>
-
   </main>
 
-  <!-- ============================================================== -->
-  <!-- 8. 50 CATEGORIES 2-TIER ACCORDION DRAWER                       -->
-  <!-- ============================================================== -->
+  <!-- 8. 50 CATEGORIES ACCORDION DRAWER -->
   <aside id="rm-drawer-menu" aria-hidden="true" style="position:fixed; top:0; left:0; bottom:0; width:310px; background:#0b0f19; border-right:1px solid rgba(255,255,255,0.1); box-shadow:4px 0 24px rgba(0,0,0,0.6); z-index:200; transform:translateX(-100%); transition:transform 0.3s ease; padding:1.25rem; overflow-y:auto;">
-    
-    <!-- Drawer Header -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
       <div>
         <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#ffffff;">50 सफल श्रेणियाँ</h3>
         <p style="margin:2px 0 0 0; font-size:0.72rem; color:#00dc82;">राइज मित्रा संपूर्ण कैटलॉग</p>
       </div>
-      <button id="rm-drawer-close" aria-label="Close Menu" style="background:rgba(255,255,255,0.06); border:none; width:32px; height:32px; border-radius:8px; font-size:1.1rem; cursor:pointer; color:#ffffff; display:flex; align-items:center; justify-content:center;">✕</button>
+      <button id="rm-drawer-close" aria-label="Close Menu" style="background:rgba(255,255,255,0.06); border:none; width:32px; height:32px; border-radius:8px; font-size:1.1rem; cursor:pointer; color:#ffffff;">✕</button>
     </div>
 
-    <!-- TIER 1 ACCORDION: 33 APPS (Hydrated by categories-data.js) -->
-    <button id="rm-tier1-toggle" type="button" onclick="toggleAccordion('tier1-list', 'tier1-arrow')" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(0, 220, 130, 0.1); border:1px solid rgba(0, 220, 130, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#00dc82; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.5rem; outline:none;">
-      <span style="display:flex; align-items:center; gap:6px;">💼 आजीविका (33 सेवाएं)</span>
-      <span id="tier1-arrow" style="font-size:0.8rem; transition:transform 0.2s ease;">▸</span>
+    <!-- TIER 1 Container (33 Apps) -->
+    <button id="rm-tier1-toggle" type="button" onclick="toggleAcc('tier1-list', 'tier1-arrow')" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(0, 220, 130, 0.1); border:1px solid rgba(0, 220, 130, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#00dc82; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.5rem;">
+      <span>💼 आजीविका (33 सेवाएं)</span>
+      <span id="tier1-arrow">▼</span>
     </button>
-    <div id="tier1-list" class="hidden pt-2 pl-1 max-h-[50vh] overflow-y-auto"></div>
-    <ul id="rm-tier1-list" style="display:none;"></ul>
+    <div id="tier1-list" class="pt-2 pl-1 max-h-[50vh] overflow-y-auto" style="display:block;"></div>
 
-    <!-- TIER 2 ACCORDION: 17 CASUAL GAMES (Hydrated by categories-data.js) -->
-    <button id="rm-tier2-toggle" type="button" onclick="toggleAccordion('tier2-list', 'tier2-arrow')" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#38bdf8; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.8rem; outline:none;">
-      <span style="display:flex; align-items:center; gap:6px;">🎮 सुरक्षा व खेल (17 श्रेणियां)</span>
-      <span id="tier2-arrow" style="font-size:0.8rem; transition:transform 0.2s ease;">▸</span>
+    <!-- TIER 2 Container (17 Games) -->
+    <button id="rm-tier2-toggle" type="button" onclick="toggleAcc('tier2-list', 'tier2-arrow')" style="width:100%; display:flex; justify-content:space-between; align-items:center; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.3); border-radius:12px; padding:0.65rem 0.9rem; color:#38bdf8; font-weight:700; font-size:0.86rem; cursor:pointer; margin-top:0.8rem;">
+      <span>🎮 सुरक्षा व खेल (17 श्रेणियां)</span>
+      <span id="tier2-arrow">▼</span>
     </button>
-    <div id="tier2-list" class="hidden pt-2 pl-1 max-h-[40vh] overflow-y-auto"></div>
-    <ul id="rm-tier2-list" style="display:none;"></ul>
-
+    <div id="tier2-list" class="pt-2 pl-1 max-h-[40vh] overflow-y-auto" style="display:block;"></div>
   </aside>
-  <!-- Non-blocking Backdrop Sentinel -->
   <div id="rm-drawer-backdrop" style="position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:190; display:none; backdrop-filter:blur(3px); pointer-events:none;"></div>
 
-  <!-- ============================================================ -->
-  <!-- 9. BOTTOM FLOATING NAVIGATION BAR                            -->
-  <!-- ============================================================ -->
+  <!-- 9. BOTTOM NAVIGATION -->
   <nav class="fixed bottom-0 inset-x-0 z-50 nav-glass px-6 py-2">
     <div class="max-w-md mx-auto flex justify-between items-center text-center">
-      <a href="#home" class="flex flex-col items-center text-emerald-400 group">
-        <span class="text-lg group-hover:scale-110 transition">🏠</span>
+      <a href="#home" class="flex flex-col items-center text-emerald-400">
+        <span class="text-lg">🏠</span>
         <span class="text-[10px] font-bold mt-0.5">होम</span>
       </a>
-      <a href="#kirana-store" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">🛒</span>
+      <a href="#kirana-store" class="flex flex-col items-center text-slate-400 hover:text-slate-200">
+        <span class="text-lg">🛒</span>
         <span class="text-[10px] font-semibold mt-0.5">ऑर्डर</span>
       </a>
-      <a href="#merchant-khata" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">📖</span>
+      <a href="#merchant-khata" class="flex flex-col items-center text-slate-400 hover:text-slate-200">
+        <span class="text-lg">📖</span>
         <span class="text-[10px] font-semibold mt-0.5">खाता</span>
       </a>
-      <a href="#vouchers" class="flex flex-col items-center text-slate-400 hover:text-slate-200 group">
-        <span class="text-lg group-hover:scale-110 transition">🎟️</span>
+      <a href="#vouchers" class="flex flex-col items-center text-slate-400 hover:text-slate-200">
+        <span class="text-lg">🎟️</span>
         <span class="text-[10px] font-semibold mt-0.5">प्रोफ़ाइल</span>
       </a>
     </div>
   </nav>
 
-  <!-- ============================================================ -->
-  <!-- 10. CLIENT RUNTIME SCRIPTS INGESTION                         -->
-  <!-- ============================================================ -->
-  <script src="/js/i18n-dict.js"></script>
-  <script src="/js/trie-search.js"></script>
-  <script src="/js/categories-data.js"></script>
-  <script src="/js/navigation.js"></script>
-  <script src="/js/consent-manager.js"></script>
-  <script src="/js/solvency-badge.js"></script>
-  <script src="/js/settings.js"></script>
-  <script src="/js/db.js"></script>
-  <script src="/js/ledger.js"></script>
-  <script src="/js/voucher-sync.js"></script>
-  <script src="/js/kirana-catalog.js"></script>
-  <script src="/js/views.js"></script>
-  <script src="/js/app.js"></script>
-
-  <!-- ============================================================ -->
-  <!-- 11. IN-LINE RESILIENT DRAWER CONTROLLER (TOUCH-SAFE)         -->
-  <!-- ============================================================ -->
+  <!-- 10. SELF-HEALING 50-CATEGORY ENGINE & RUNTIME CONTROLLER -->
   <script>
+    // 50 PLAY STORE CANONICAL TAXONOMY (Zero External Network Dependency)
+    const RM_CATS = [
+      ["#cat-art-design", "🎨", "01. Art & Design (कला व डिज़ाइन)", 1],
+      ["#cat-auto-vehicles", "🚗", "02. Auto & Vehicles (ऑटो व वाहन)", 1],
+      ["#cat-beauty", "💄", "03. Beauty (सौंदर्य व ग्रूमिंग)", 1],
+      ["#cat-books-reference", "📚", "04. Books & Reference (किताबें)", 1],
+      ["#merchant-khata", "💼", "05. Business (सॉवरेन बहीखाता)", 1],
+      ["#cat-comics", "🎭", "06. Comics (कॉमिक्स व वेबटून)", 1],
+      ["#cat-communication", "💬", "07. Communication (संचार व चैट)", 1],
+      ["#cat-dating", "❤️", "08. Dating (परिचय व रिश्ते)", 1],
+      ["#hunar-seekhein", "🎓", "09. Education (हुनर व शिक्षा)", 1],
+      ["#cat-entertainment", "🎬", "10. Entertainment (मनोरंजन)", 1],
+      ["#cat-events", "🎟️", "11. Events (मेले व आयोजन)", 1],
+      ["#cat-family", "👨‍👩‍👧", "12. Family (परिवार व बच्चे)", 1],
+      ["#ledger-balance", "💰", "13. Finance (RM CASH लेज़र)", 1],
+      ["#cat-food-drink", "🍲", "14. Food & Drink (खान-पान)", 1],
+      ["#swasth-man", "🌿", "15. Health & Fitness (स्वास्थ्य)", 1],
+      ["#cat-house-home", "🏠", "16. House & Home (घर व मरम्मत)", 1],
+      ["#cat-libraries-demo", "📦", "17. Libraries & Demo (टूल्स)", 1],
+      ["#lifestyle-hub", "🧘", "18. Lifestyle (जीवनशैली)", 1],
+      ["#hyperlocal-map", "🗺️", "19. Maps & Navigation (नक्शा)", 1],
+      ["#cat-medical", "💊", "20. Medical (दवा व डॉक्टर)", 1],
+      ["#cat-music-audio", "🎵", "21. Music & Audio (संगीत)", 1],
+      ["#cat-news", "📰", "22. News & Magazines (समाचार)", 1],
+      ["#cat-parenting", "🍼", "23. Parenting (शिशु पोषण)", 1],
+      ["#cat-personalization", "✨", "24. Personalization (थीम्स)", 1],
+      ["#cat-photography", "📸", "25. Photography (कैमरा)", 1],
+      ["#invoicing-tool", "⚡", "26. Productivity (उत्पादकता)", 1],
+      ["#kirana-store", "🛒", "27. Shopping (0% किराना स्टोर)", 1],
+      ["#cat-social", "🌐", "28. Social (चौपाल व समाज)", 1],
+      ["#cat-sports-app", "🏏", "29. Sports (खेलकूद व लाइव)", 1],
+      ["#utility-tools", "🛠️", "30. Tools (कैलकुलेटर व टूल्स)", 1],
+      ["#cat-travel", "✈️", "31. Travel & Local (यात्रा)", 1],
+      ["#cat-video", "🎞️", "32. Video Players & Editors", 1],
+      ["#cat-weather", "☀️", "33. Weather (मौसम पूर्वानुमान)", 1],
+      ["#game-action", "🏹", "01. Action (एक्शन तीरंदाजी)", 2],
+      ["#game-adventure", "🧭", "02. Adventure (रोमांचक यात्रा)", 2],
+      ["#game-arcade", "🕹️", "03. Arcade (गेंद टप्पा / आर्केड)", 2],
+      ["#game-board", "🎲", "04. Board (देसी लूडो व कैरम)", 2],
+      ["#game-card", "🃏", "05. Card (सॉलिटेयर - Zero Cash)", 2],
+      ["#game-casino", "🎡", "06. Casino (पॉइंट्स लकी चक्र)", 2],
+      ["#game-casual", "🎈", "07. Casual (रंगोली व हल्के खेल)", 2],
+      ["#game-educational", "🧠", "08. Educational (ज्ञान क्विज़)", 2],
+      ["#game-music", "🥁", "09. Music (संगीत ताल व बीट)", 2],
+      ["#game-puzzle", "🧩", "10. Puzzle (दिमागी पहेलियाँ)", 2],
+      ["#game-racing", "🏎️", "11. Racing (बैलगाड़ी / कार्ट रेस)", 2],
+      ["#game-role-playing", "👑", "12. Role Playing (गाँव का प्रधान)", 2],
+      ["#game-simulation", "🚜", "13. Simulation (खेत सिमुलेटर)", 2],
+      ["#game-sports", "🏏", "14. Sports (गली क्रिकेट)", 2],
+      ["#game-strategy", "♟️", "15. Strategy (चाणक्य नीति / शतरंज)", 2],
+      ["#game-trivia", "❓", "16. Trivia (देसी ट्रिविया व तथ्य)", 2],
+      ["#game-word", "🔤", "17. Word (शब्द पहेली व कोश)", 2]
+    ];
+
+    function renderDynamicCategories() {
+      const t1 = document.getElementById('tier1-list');
+      const t2 = document.getElementById('tier2-list');
+      if (!t1 || !t2) return;
+      if (t1.children.length > 0) return; // पहले से भरे होने पर दोबारा रेंडर न करें
+
+      const f1 = document.createDocumentFragment();
+      const f2 = document.createDocumentFragment();
+
+      RM_CATS.forEach(([hash, icon, title, tier]) => {
+        const a = document.createElement('a');
+        a.href = hash;
+        a.className = 'rm-menu-item';
+        a.innerHTML = `<span style="font-size:1.1rem; line-height:1;">${icon}</span><span>${title}</span>`;
+        if (tier === 1) f1.appendChild(a);
+        else f2.appendChild(a);
+      });
+
+      t1.appendChild(f1);
+      t2.appendChild(f2);
+    }
+
+    function toggleAcc(listId, arrowId) {
+      renderDynamicCategories();
+      const list = document.getElementById(listId);
+      const arrow = document.getElementById(arrowId);
+      if (!list) return;
+      const isClosed = list.style.display === 'none';
+      list.style.display = isClosed ? 'block' : 'none';
+      if (arrow) arrow.textContent = isClosed ? '▼' : '▶';
+    }
+
     function openDrawer() {
-      const drawer = document.getElementById('rm-drawer-menu');
-      const backdrop = document.getElementById('rm-drawer-backdrop');
-      if (drawer) {
-        drawer.style.transform = 'translateX(0)';
-        drawer.setAttribute('aria-hidden', 'false');
-      }
-      if (backdrop) {
-        backdrop.style.display = 'block';
-        backdrop.style.pointerEvents = 'auto';
-      }
+      renderDynamicCategories();
+      const d = document.getElementById('rm-drawer-menu');
+      const b = document.getElementById('rm-drawer-backdrop');
+      if (d) { d.style.transform = 'translateX(0)'; d.setAttribute('aria-hidden', 'false'); }
+      if (b) { b.style.display = 'block'; b.style.pointerEvents = 'auto'; }
       document.body.style.overflow = 'hidden';
-      if (window.renderCategoriesAccordion) {
-        window.renderCategoriesAccordion();
-      }
     }
 
     function closeDrawer() {
-      const drawer = document.getElementById('rm-drawer-menu');
-      const backdrop = document.getElementById('rm-drawer-backdrop');
-      if (drawer) {
-        drawer.style.transform = 'translateX(-100%)';
-        drawer.setAttribute('aria-hidden', 'true');
-      }
-      if (backdrop) {
-        backdrop.style.display = 'none';
-        backdrop.style.pointerEvents = 'none';
-      }
+      const d = document.getElementById('rm-drawer-menu');
+      const b = document.getElementById('rm-drawer-backdrop');
+      if (d) { d.style.transform = 'translateX(-100%)'; d.setAttribute('aria-hidden', 'true'); }
+      if (b) { b.style.display = 'none'; b.style.pointerEvents = 'none'; }
       document.body.style.overflow = '';
     }
 
-    window.openDrawer = openDrawer;
-    window.closeDrawer = closeDrawer;
-
-    // Resilient Fallback for toggleAccordion
-    if (!window.toggleAccordion) {
-      window.toggleAccordion = function (listId, arrowId) {
-        const list = document.getElementById(listId);
-        const arrow = document.getElementById(arrowId);
-        if (!list) return;
-        const isClosed = list.classList.contains('hidden');
-        if (isClosed) {
-          list.classList.remove('hidden');
-          if (arrow) arrow.textContent = '▼';
-        } else {
-          list.classList.add('hidden');
-          if (arrow) arrow.textContent = '▸';
-        }
-      };
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
+      renderDynamicCategories();
       const menuBtn = document.getElementById('rm-menu-btn');
       const closeBtn = document.getElementById('rm-drawer-close');
       const backdrop = document.getElementById('rm-drawer-backdrop');
@@ -507,28 +439,16 @@
       if (closeBtn) closeBtn.onclick = (e) => { e.preventDefault(); closeDrawer(); };
       if (backdrop) backdrop.onclick = (e) => { e.preventDefault(); closeDrawer(); };
 
-      if (window.renderCategoriesAccordion) {
-        window.renderCategoriesAccordion();
-      }
-
       document.addEventListener('click', (e) => {
-        if (e.target.closest('.rm-menu-item') || e.target.closest('.rm-cat-item')) {
-          closeDrawer();
-        }
+        if (e.target.closest('.rm-menu-item')) closeDrawer();
       });
     });
 
-    // Network Reconnect Freeze Protection
-    window.addEventListener('unhandledrejection', (event) => {
-      event.preventDefault();
-    });
+    window.addEventListener('unhandledrejection', (e) => { e.preventDefault(); });
 
-    // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((reg) => console.log('[PWA] Service Worker Registered! Scope:', reg.scope))
-          .catch((err) => console.error('[PWA] Service Worker Registration Failed:', err));
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
       });
     }
   </script>
